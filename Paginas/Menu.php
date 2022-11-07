@@ -3,49 +3,35 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Menu TECBANK</title>
+	<title>Menu TEC Eats</title>
 
 	<link rel="stylesheet"  href="../css/bootstrap.css">
 
 </head>
 <body class="container">
 	<div class="container mt-5 "  align="center" >
-		<h2  class="mb-3">Menu TECBANK</h2>
+		<h2  class="mb-3">Menu TEC Eats</h2>
 
 		<div class="container mb-4 d-block ">
-			<a type="button" class="btn  btn-light"  href="VerCuentas.php ?ban=false & id=<?= $_GET['id']; ?>">Ver Cuentas</a>
+			<a type="button" class="btn  btn-light"  href="Desayuno.php ?ban=false & id=<?= $_GET['id']; ?>">Desayuno</a>
 		</div>
 		
 		<div class="container mb-4 d-block ">
-			<a type="button" class="btn btn-light"  href="Citas.php ?id=<?= $_GET['id']; ?>">Citas</a>
+			<a type="button" class="btn btn-light"  href="Citas.php ?id=<?= $_GET['id']; ?>">Almuerzo</a>
 		</div>
 
 		<div class="container mb-4 d-block ">
-			<a type="button" class="btn btn-light"  href="Tramites.php ?id=<?= $_GET['id']; ?>">Solicitar Tramites</a>
+			<a type="button" class="btn btn-light"  href="Tramites.php ?id=<?= $_GET['id']; ?>">Cena</a>
 		</div>
 
 		<div class="container mb-4 d-block ">
-			<a type="button" class="btn btn-light"  href="Reportes.php ?id=<?= $_GET['id']; ?>">Reportes</a>
+			<a type="button" class="btn btn-light"  href="Reportes.php ?id=<?= $_GET['id']; ?>">Ver carrito de compras</a>
 		</div>
 
 		<div class="container mb-4 d-block ">
-			<a type="button" class="btn btn-light"  href="Transferencias.php ?id=<?= $_GET['id']; ?>">Realizar una Transferencia bancaria</a>
+			<a type="button" class="btn btn-light"  href="Transferencias.php ?id=<?= $_GET['id']; ?>">Ver mi historial</a>
 		</div>
 
-		<div class="container mb-4 d-block ">
-			<a type="button" class="btn btn-light"  href="Historial.php ?id=<?= $_GET['id']; ?>">Historial de movimientos de las transferencias </a>
-		</div>
-
-		<div class="container mb-4 d-block ">
-			<a type="button" class="btn btn-light"  href="Servicios.php ?id=<?= $_GET['id']; ?>">Pago de Servicios</a>
-		</div>
-
-		<div class="container mb-4 d-block ">
-			<a type="button" class="btn btn-light"  href="CambioContr.php ?id=<?= $_GET['id']; ?>">Cambio de contraseña</a>
-		</div>
-		<div class="container mb-4 d-block ">
-			<a type="button" class="btn btn-light"  href="TipoCambio.html">Tipo de cambio</a>
-		</div>
 		<div class="container mb-4 d-block ">
 			<a type="button" class="btn btn-light"  href="../index.php">Salir</a>
 		</div>
