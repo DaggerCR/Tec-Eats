@@ -16,12 +16,15 @@
 
 ?>
 
+
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Desayuno TEC Eats</title>
+	<script src="https://code.jquery.com/jquery-3.1.0.min.js" type='text/javascript'></script>
 
 	<link rel="stylesheet"  href="../css/bootstrap.css">
 
@@ -36,7 +39,7 @@
 		<h5  class="mb-3" align="left" >Plato Principal</h5>
 			
 		<div class="container mb-4 d-block ">
-		<select class="form-select" aria-label="Default select example" id="CuenS" name="PlatoPrincipal">
+		<select class="form-select" aria-label="Default select example" id="PlatoPrincipal" name="PlatoPrincipal">
 			<option selected>Ninguno</option>
 			
 			<?php
@@ -48,7 +51,7 @@
 					foreach($query_run as $Comida)
 					{				
 			?>	
-						<option><?=$Comida['nombre']?></option>	
+						<option><?=$Comida['nombre']?> - ₡<?=$Comida['precio']?></option>	
 						<?php
 					} 
 				}
@@ -70,7 +73,7 @@
 				foreach($query_run as $Comida)
 				{				
 		?>	
-					<option><?=$Comida['nombre']?></option>	
+					<option><?=$Comida['nombre']?> - ₡<?=$Comida['precio']?></option>	
 					<?php
 				} 
 			}
@@ -91,7 +94,7 @@
 				foreach($query_run as $Comida)
 				{				
 		?>	
-					<option><?=$Comida['nombre']?></option>	
+					<option><?=$Comida['nombre']?> - ₡<?=$Comida['precio']?></option>	
 					<?php
 				} 
 			}
@@ -112,22 +115,40 @@
 				foreach($query_run as $Comida)
 				{				
 		?>	
-					<option><?=$Comida['nombre']?></option>	
+					<option><?=$Comida['nombre']?> - ₡<?=$Comida['precio']?></option>	
 					<?php
 				} 
 			}
 			?>
 		</select>
 		</div>
+		<h5  class="mb-3" align="left" >Total: </h5>
+		
 	</div>
-	
+	<input name="col_title" id="col_title" align="left"/>
 	<div class="mt-5 "  align="center" >
 		<a href="confirmacion.html">
 			<input type="submit" class="btn btn-success form-control" name="save" value="Agregar al carrito">
 		</a>
+	<script type='text/javascript'>
+
+        $("#PlatoPrincipal").change(function()
+		{
+            $("#PlatoPrincipal").children().each(function()
+			{
+                if(this.value == $('#PlatoPrincipal').val())
+				{
+                    $("#col_title").val(this.innerHTML);
+                }
+            });
+            // console.log($("#col_title").val());
+        });
+
+    </script>
 	</div>
 	
 	<script src="../js/bootstrap.bundle.js"></script>
+	
 </form>
 </body>
 </html>
