@@ -1,5 +1,5 @@
 <?php
-		$con = mysqli_connect("localhost","root","atomico","teceatsfinal");
+		$con = mysqli_connect("localhost","root","12345","teceatsfinal");
 		 
 		if (mysqli_connect_errno())
 		{
