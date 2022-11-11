@@ -20,15 +20,21 @@ if(isset($_POST['validar_usuario']))
         $row = $result->fetch_assoc(); 
         
         echo "contraseña: " . $row["passw"];
-        if($contra==$row["passw"]){
-            $ID =$row["id"];
-           
-           echo "<script>Validado(true,$ID)</script>";
-           
-        }
-        else{
-            echo "<script>Validado(false,$ID)</script>";
-        }
+		
+			if($contra==$row["passw"])
+			{
+				$ID = $row["id"];
+				if($row["tipoUsuario"] == 1)
+					echo "<script>Validado(true,true)</script>";
+				else
+					echo "<script>Validado(true,false)</script>";
+			   
+			}
+			else
+			{
+				echo "<script>Validado(false,true)</script>";
+			}
+		
 
         
     } 

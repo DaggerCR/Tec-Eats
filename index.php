@@ -28,6 +28,7 @@
 			</div>
 			</div>
 			<button type="submit" class="btn btn-light" name="validar_usuario">Iniciar sesión</button>
+			<button type="submit" class="btn btn-light" name="validar_usuario">Iniciar sesión como administrador1</button>
 			<h3>----------------------------------o----------------------------------</h3>
 		</form>
 			<a type="button" class="btn btn-light"  href="Paginas/Registrarse.php">Registrarse</a>
