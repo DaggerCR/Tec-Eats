@@ -16,7 +16,8 @@ if(isset($_POST['insertar_usuario']))
     $correo = mysqli_real_escape_string($con, $_POST['Correo']);
 
 
-    $query = "INSERT INTO usuario (nombre,apellido1,apellido2,correo,usuario,passw) VALUES ('$nombre','$apellido1','$apellido2','$correo','$usuario','$contra')";
+    $query = "INSERT INTO usuario (nombre,apellido1,apellido2,correo,usuario,passw,tipoUsuario)
+	VALUES ('$nombre','$apellido1','$apellido2','$correo','$usuario','$contra',false)";
 
     $query_run = mysqli_query($con, $query);
     if($query_run)

@@ -160,11 +160,12 @@
 				}
 						?>
    </table>
-   <legend id ="val2"class="text-center header text-success">Total a Pagar: </legend>
-   <legend id ="val"class="text-center header text-success"></legend>
+   <legend id ="val2">Total a Pagar: </legend>
+   <legend id ="val"></legend>
    <script>
             function sumarTabla()
             {
+				$('#save').toggle();
 				var table = document.getElementById("table"), sumVal = 0;  
 				var table2 = document.getElementById("table2");
 				var table3 = document.getElementById("table3");
@@ -206,7 +207,14 @@
    
 	</div>	
 	<br>
-   <input type="submit" class="btn btn-success form-control" name="save" value="Agregar al carrito">
+	<script>
+		$('#replybutton').click(function() {
+		$('#save').toggle()
+		})
+	</script>
+	<div id="replybutton" class="btn4 like" style="">
+		<input style="display:none;" type="submit" class="btn btn-success form-control" id="save" name="save" value="Agregar al carrito">
+	</div>
 	<script src="../js/bootstrap.bundle.js"></script>         
 </form>
 

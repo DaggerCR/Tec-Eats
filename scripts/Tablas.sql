@@ -1,6 +1,8 @@
 create schema teceatsfinal;
 use teceatsfinal;
 
+
+
 create table usuario (
 	id int primary key NOT NULL AUTO_INCREMENT,
     nombre varchar(15),
@@ -8,7 +10,8 @@ create table usuario (
     apellido2 varchar(15),
     correo varchar(25),
     usuario varchar(15),
-    passw varchar(15)
+    passw varchar(15),
+    tipoUsuario bool
 );
 
 create table cuentas(
@@ -69,9 +72,3 @@ create table histPedidos(
     usuario_id int,
     fecha date
 );
-
-
-
-
-
-
