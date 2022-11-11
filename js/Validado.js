@@ -5,15 +5,11 @@ function Validado(valido,admi)
 		if(admi)
 		{
 			location.href="MenuAdmin.php ?id=A";
-			alert('true');
-			
 		}
 		else
 		{
 			location.href="Menu.php ?id=A";
-			alert('false');
-		}
-			
+		}	
     }
     else
 	{
