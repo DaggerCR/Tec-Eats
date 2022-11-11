@@ -13,23 +13,23 @@
 		<h2  class="mb-3">Menu Administrador TEC Eats</h2>
 
 		<div class="container mb-4 d-block ">
-			<a type="button" class="btn  btn-light"  href="MenuGestionComidas.php ?ban=false & id=<?= $_GET['id']; ?>">Gestión de comidas</a>
+			<a type="button" class="btn  btn-light"  href="MenuGestionComidas.php">Gestión de comidas</a>
 		</div>
 		
 		<div class="container mb-4 d-block ">
-			<a type="button" class="btn btn-light"  href="MenuGestionClientes.php ?id=<?= $_GET['id']; ?>">Gestión de clientes</a>
+			<a type="button" class="btn btn-light"  href="MenuGestionClientes.php">Gestión de clientes</a>
 		</div>
 
 		<div class="container mb-4 d-block ">
-			<a type="button" class="btn btn-light"  href="MenuGestionTiempos.php ?id=<?= $_GET['id']; ?>">Gestión de tiempos de comida</a>
+			<a type="button" class="btn btn-light"  href="MenuGestionTiempos.php">Gestión de tiempos de comida</a>
 		</div>
 
 		<div class="container mb-4 d-block ">
-			<a type="button" class="btn btn-light"  href="MenuGestionTipos.php ?id=<?= $_GET['id']; ?>">Gestión de tipos de comida</a>
+			<a type="button" class="btn btn-light"  href="MenuGestionTipos.php">Gestión de tipos de comida</a>
 		</div>
 
 		<div class="container mb-4 d-block ">
-			<a type="button" class="btn btn-light"  href="MenuGestionPedidos.php ?id=<?= $_GET['id']; ?>">Gestión de pedidos</a>
+			<a type="button" class="btn btn-light"  href="MenuGestionPedidos.php">Gestión de pedidos</a>
 		</div>
 
 		<div class="container mb-4 d-block ">
