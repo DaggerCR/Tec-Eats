@@ -1,4 +1,4 @@
-<script src="../js/Gestion.js"></script>
+<script src="../js/GestionComida.js"></script>
 <?php
 session_start();
 require '../dbcon.php';
@@ -23,12 +23,12 @@ if(isset($_POST['modificar_comida']))
     $query_run = mysqli_query($con, $query);
     if($query_run)
     {   
-        echo "<script>Gestion(true)</script>";
+        echo "<script>GestionComida(true)</script>";
        
     }
     else
     {
-        echo "<script>Gestion(false)</script>";
+        echo "<script>GestionComida(false)</script>";
     }
 }
 ?>

@@ -21,14 +21,6 @@
 		</div>
 
 		<div class="container mb-4 d-block ">
-			<a type="button" class="btn btn-light"  href="MenuGestionTiempos.php">Gestión de tiempos de comida</a>
-		</div>
-
-		<div class="container mb-4 d-block ">
-			<a type="button" class="btn btn-light"  href="MenuGestionTipos.php">Gestión de tipos de comida</a>
-		</div>
-
-		<div class="container mb-4 d-block ">
 			<a type="button" class="btn btn-light"  href="MenuGestionPedidos.php">Gestión de pedidos</a>
 		</div>
 
