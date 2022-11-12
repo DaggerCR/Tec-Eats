@@ -19,23 +19,23 @@
 		<form action="ModificarPedido.php" method="POST">
 
             <div class="container mb-4 d-block ">
-                <select class="form-select" aria-label="Default select example" id="Alimento" name="Alimento">
-                    
-                    <?php
-                        $query = "SELECT * FROM pedido";
-                        $query_run = mysqli_query($con, $query);
+            <select class="form-select" aria-label="Default select example" id="Alimento" name="Alimento">
+                
+                <?php
+                    $query = "SELECT * FROM pedidos";
+                    $query_run = mysqli_query($con, $query);
 
-                        if(mysqli_num_rows($query_run) > 0)
-                        {
-                            foreach($query_run as $Comida)
-                            {				
-                    ?>	
-                                <option><?=$Comida['alimento']?></option>	
-                                <?php
-                            } 
-                        }
-                        ?>
-                </select>
+                    if(mysqli_num_rows($query_run) > 0)
+                    {
+                        foreach($query_run as $Comida)
+                        {				
+                ?>	
+                            <option><?=$Comida['alimento']?></option>	
+                            <?php
+                        } 
+                    }
+                    ?>
+            </select>
             </div>
 
 			<div class="form-group">

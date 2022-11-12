@@ -78,10 +78,8 @@
             <div class="container mb-4 d-block ">
             <select class="form-select" aria-label="Default select example" id="Tipo" name="Administrador">
                 
-                <?php
-                    <option>1</option>
-                    <option>2</option>
-                ?>
+                    <option>true</option>
+                    <option>false</option>
             </select>
             </div>
 
