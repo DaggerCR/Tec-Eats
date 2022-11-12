@@ -33,12 +33,12 @@ create table comidas(
 );
 
 create table tipos(
-	id int primary key NOT NULL AUTO_INCREMENT,
+	id int primary key,
     nombre varchar(15)
 );
 
 create table tiempos(
-	id int primary key NOT NULL AUTO_INCREMENT,
+	id int primary key,
     nombre varchar(15)
 );
 
