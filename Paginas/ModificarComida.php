@@ -16,7 +16,7 @@ if(isset($_POST['modificar_comida']))
     $tiempo= mysqli_real_escape_string($con, $_POST['Tiempo']);
 
     $query = "UPDATE comidas 
-                SET nombre='$nombreNuevo',disponibilidad='$disponibilidad',tipo_id=tipos.id,precio='$precio',tiempo_id=tiempos.id 
+                SET nombre = '$nombreNuevo', disponibilidad='$disponibilidad',tipo_id = tipos.id, precio='$precio',tiempo_id=tiempos.id 
                 FROM tipos,tiempos 
                 WHERE tipos.nombre='$tipo' AND tiempos.nombre='$tiempo' AND comidas.nombre='$nombre'";
 

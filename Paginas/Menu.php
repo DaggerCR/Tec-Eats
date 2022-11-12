@@ -25,7 +25,7 @@
 		</div>
 
 		<div class="container mb-4 d-block ">
-			<a type="button" class="btn btn-light"  href="Reportes.php ?id=<?= $_GET['id']; ?>">Ver carrito de compras</a>
+			<a type="button" class="btn btn-light"  href="VerCarrito.php ?id=<?= $_GET['id']; ?>">Ver carrito de compras</a>
 		</div>
 
 		<div class="container mb-4 d-block ">
