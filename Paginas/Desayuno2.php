@@ -6,7 +6,7 @@
 ?>
 
 <?php
-	if(isset($_POST['save']) && $_POST['save']=='Save')
+	if(isset($_POST['save']))
 	{	
 		//si se toca el botón de agregar comida, se ejecuta este código que aún no está terminado
 		$query = "SELECT * FROM comidas WHERE tipo_id= 1 and tiempo_id = 1";
@@ -32,7 +32,7 @@
 <body class="container">
 
 
-<form action="" method="POST">
+<form action="InsertarCarrito.php" method="POST">
 
 	<div class="container mt-5 "  align="center" >
 		<h2  class="mb-3" >Desayuno Version2</h2>
@@ -57,9 +57,10 @@
 						$contador++; 					
 						echo "
 						<tr>
-						<td width='150' style='text-align:center' ><input type='checkbox' id='$contador' value='$check.$contador'></td>
-						<td>".$Comida['nombre']."</td>	
-						<td>".$Comida['precio']."</td>	
+							<td style='text-align:center' >
+								<input type='checkbox' onclick='chequeo()' name='check' value='$check.$contador'></td>
+							<td> <input type='hidden' name='table11' value=".$Comida['nombre']." >".$Comida['nombre']."</td>	
+							<td> <input type='hidden' name='table12' value=".$Comida['precio']." >".$Comida['precio']."</td>	
 						</tr>
 						";
 						 
@@ -69,7 +70,8 @@
    </table>
    <br>
    <h5  class="mb-3" align="center" >Adicional</h5>
-		<table border='1' cellpadding='0' cellspacing='0' width='650' bgcolor='#F6F6F6' bordercolor='#5F5F5F' align='center' id='table2'>
+		<table border='1' cellpadding='0' cellspacing='0' width='650' bgcolor='#F6F6F6' 
+			bordercolor='#5F5F5F' align='center' id='table2'>
       <tr>
          <th width='150' style='font-weight: bold' style='text-align:center'>Añadir</th>
          <th width='150' style='font-weight: bold' style='text-align:center'>Nombre</th> 
@@ -88,7 +90,8 @@
 						$contador++; 					
 						echo "
 						<tr>
-						<td width='150' style='text-align:center' ><input type='checkbox' id='B$contador' value='$check.$contador'></td>
+						<td width='150' style='text-align:center' ><input type='checkbox' 
+							id='B$contador' value='$check.$contador'></td>
 						<td>".$Comida['nombre']."</td>	
 						<td>".$Comida['precio']."</td>	
 						</tr>
@@ -100,7 +103,8 @@
    </table>
    <br>
    <h5  class="mb-3" align="center" >Bebida</h5>
-		<table border='1' cellpadding='0' cellspacing='0' width='650' bgcolor='#F6F6F6' bordercolor='#5F5F5F' align='center' id='table3'>
+		<table border='1' cellpadding='0' cellspacing='0' width='650' bgcolor='#F6F6F6'
+			bordercolor='#5F5F5F' align='center' id='table3'>
       <tr>
          <th width='150' style='font-weight: bold' style='text-align:center'>Añadir</th>
          <th width='150' style='font-weight: bold' style='text-align:center'>Nombre</th> 
@@ -131,7 +135,8 @@
    </table>
    <br>
    <h5  class="mb-3" align="center" >Postre</h5>
-		<table border='1' cellpadding='0' cellspacing='0' width='650' bgcolor='#F6F6F6' bordercolor='#5F5F5F' align='center' id='table4'>
+		<table border='1' cellpadding='0' cellspacing='0' width='650' bgcolor='#F6F6F6' 
+			bordercolor='#5F5F5F' align='center' id='table4' name ='table4'>
       <tr>
          <th width='150' style='font-weight: bold' style='text-align:center'>Añadir</th>
          <th width='150' style='font-weight: bold' style='text-align:center'>Nombre</th> 
@@ -162,10 +167,11 @@
    </table>
    <legend id ="val2">Total a Pagar: </legend>
    <legend id ="val"></legend>
+   
    <script>
             function sumarTabla()
             {
-				$('#save').toggle();
+				$('#registrar_carrito').toggle();
 				var table = document.getElementById("table"), sumVal = 0;  
 				var table2 = document.getElementById("table2");
 				var table3 = document.getElementById("table3");
@@ -203,24 +209,39 @@
                
             }
    </script>
+   
+   <script>
+   function chequeo {
+  // Get the checkbox
+  var checkBox = document.getElementById("myCheck");
+  // Get the output text
+  var text = document.getElementById("text");
+
+  // If the checkbox is checked, display the output text
+  if (checkBox.checked == true){
+    text.style.display = "block";
+  } else {
+    text.style.display = "none";
+  }
+}
+   </script>
+   
    <input type="button" onclick="sumarTabla()" name="aceptar" value="Facturar">
+   <p id="text" style="display:none">Checkbox is CHECKED!</p>
    
 	</div>	
 	<br>
+
 	<script>
 		$('#replybutton').click(function() {
-		$('#save').toggle()
+		$('#registrar_carrito').toggle()
 		})
 	</script>
+	
 	<div id="replybutton" class="btn4 like" style="">
-		<input style="display:none;" type="submit" class="btn btn-success form-control" id="save" name="save" value="Agregar al carrito">
+		<input style="display:none;" type="submit" class="btn btn-success form-control" id="registrar_carrito" name="registrar_carrito" value="Agregar al carrito">
 	</div>
 	<script src="../js/bootstrap.bundle.js"></script>         
 </form>
-
-<form action="" method="post" style="width:40%;margin:0 auto;">
-	
-</form>
-
 </body>
 </html>

@@ -1,4 +1,5 @@
-<script src="../js/Validado.js"></script>
+<script src="../js/Validado.js">
+</script>
 
 
 <?php
@@ -20,19 +21,20 @@ if(isset($_POST['validar_usuario']))
         $row = $result->fetch_assoc(); 
         
         echo "contraseña: " . $row["passw"];
+		echo "ID: " . $row["id"];
 		
 			if($contra==$row["passw"])
 			{
 				$ID = $row["id"];
 				if($row["tipoUsuario"] == 1)
-					echo "<script>Validado(true,true)</script>";
+					echo "<script>Validado(true,true,$ID)</script>";
 				else
-					echo "<script>Validado(true,false)</script>";
+					echo "<script>Validado(true,false,$ID)</script>";
 			   
 			}
 			else
 			{
-				echo "<script>Validado(false,true)</script>";
+				echo "<script>Validado(false,true,$ID)</script>";
 			}
 		
 
@@ -40,7 +42,7 @@ if(isset($_POST['validar_usuario']))
     } 
     else 
     {
-        echo "<script>Validado(false)</script>";
+        echo "<script>Validado(false,false,$ID)</script>";
     }
 }
 

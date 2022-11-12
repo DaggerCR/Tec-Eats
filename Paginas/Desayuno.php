@@ -5,17 +5,6 @@
 
 ?>
 
-<?php
-	if(isset($_POST['save']) && $_POST['save']=='Save')
-	{	
-		//si se toca el botón de agregar comida, se ejecuta este código que aún no está terminado
-		$query = "SELECT * FROM comidas WHERE tipo_id= 1 and tiempo_id = 1";
-		$query_run = mysqli_query($con, $query);
-						
-	}
-
-?>
-
 
 
 <!DOCTYPE html>
@@ -30,9 +19,6 @@
 
 </head>
 <body class="container">
-
-
-<form action="" method="POST">
 
 	<div class="container mt-5 "  align="center" >
 		<h2  class="mb-3" >Desayuno</h2>
@@ -61,7 +47,7 @@
 		</div>
 		<h5  class="mb-3" align="left" >Adicional</h5>
 		<div class="container mb-4 d-block ">
-			<select class="form-select" aria-label="Default select example" id="CuenS" name="Adicional">
+			<select class="form-select" aria-label="Default select example" id="Adicional" name="Adicional">
 		<option selected>Ninguno</option>
 		
 		<?php
@@ -80,9 +66,11 @@
 			?>
 		</select>
 		</div>
+		
+		
 		<h5  class="mb-3" align="left" >Bebida</h5>
 		<div class="container mb-4 d-block ">
-			<select class="form-select" aria-label="Default select example" id="CuenS" name="Bebida">
+			<select class="form-select" aria-label="Default select example" id="Bebida" name="Bebida">
 		<option selected>Ninguna</option>
 		
 		<?php
@@ -103,7 +91,7 @@
 		</div>
 		<h5  class="mb-3" align="left" >Postre</h5>
 		<div class="container mb-4 d-block ">
-			<select class="form-select" aria-label="Default select example" id="CuenS" name="Postre">
+			<select class="form-select" aria-label="Default select example" id="Postre" name="Postre">
 		<option selected>Ninguno</option>
 		
 		<?php
@@ -122,14 +110,20 @@
 			?>
 		</select>
 		</div>
-		<h5  class="mb-3" align="left" >Total: </h5>
+		
 		
 	</div>
-	<input name="col_title" id="col_title" align="left"/>
-	<div class="mt-5 "  align="center" >
-		<a href="confirmacion.html">
-			<input type="submit" class="btn btn-success form-control" name="save" value="Agregar al carrito">
-		</a>
+	
+	<form action="InsertarCarrito.php ?id=<?= $_GET['id']; ?>" method="POST">
+		<h5  class="mb-3" align="left" >Comida: </h5>
+		<input class="form-control" name="col_title2" id="col_title2" value=''align="left"/>
+		
+		<h5  class="mb-3" align="left" >Total: </h5>
+		<input class="form-control" name="col_title" id="col_title" value='0'align="left"/>
+		
+		<button type="submit" class="btn btn-light mt-5" name="registrar_carrito"> Agregar al carrito</button>		
+	</form>
+	
 	<script type='text/javascript'>
 
         $("#PlatoPrincipal").change(function()
@@ -138,13 +132,123 @@
 			{
                 if(this.value == $('#PlatoPrincipal').val())
 				{
-                    $("#col_title").val(this.innerHTML);
+					var precio = $('#PlatoPrincipal').val().split(" -");
+					var suma = $("#col_title2").val() + precio[0] + ",";
+                    $("#col_title2").val(suma);
+                }
+            });
+            // console.log($("#col_title").val());
+        });
+		
+		$("#Adicional").change(function()
+		{
+            $("#Adicional").children().each(function()
+			{
+                if(this.value == $('#Adicional').val())
+				{
+					var precio = $('#Adicional').val().split(" -");
+					var suma = $("#col_title2").val() + precio[0] + ",";
+                    $("#col_title2").val(suma);
+                }
+            });
+            // console.log($("#col_title").val());
+        });
+		
+		$("#Bebida").change(function()
+		{
+            $("#Bebida").children().each(function()
+			{
+                if(this.value == $('#Bebida').val())
+				{
+					var precio = $('#Bebida').val().split(" -");
+					var suma = $("#col_title2").val() + precio[0] + ",";
+                    $("#col_title2").val(suma);
+                }
+            });
+            // console.log($("#col_title").val());
+        });
+		
+		$("#Postre").change(function()
+		{
+            $("#Postre").children().each(function()
+			{
+                if(this.value == $('#Postre').val())
+				{
+					var precio = $('#Postre').val().split(" -");
+					var suma = $("#col_title2").val() + precio[0] + ",";
+                    $("#col_title2").val(suma);
                 }
             });
             // console.log($("#col_title").val());
         });
 
     </script>
+	
+	
+	<script type='text/javascript'>
+
+        $("#PlatoPrincipal").change(function()
+		{
+            $("#PlatoPrincipal").children().each(function()
+			{
+                if(this.value == $('#PlatoPrincipal').val())
+				{
+					var precio = $('#PlatoPrincipal').val().split("₡");
+					var suma = parseInt(precio[1]) + parseInt($("#col_title").val());
+                    $("#col_title").val(suma);
+                }
+            });
+            // console.log($("#col_title").val());
+        });
+
+    </script>
+	
+	<script>
+		$("#Adicional").change(function()
+			{
+				$("#Adicional").children().each(function()
+				{
+					if(this.value == $('#Adicional').val())
+					{
+						var precio = $('#Adicional').val().split("₡");
+						var suma = parseInt(precio[1]) + parseInt($("#col_title").val());
+						$("#col_title").val(suma);
+					}
+				});
+				// console.log($("#col_title").val());
+			});
+	</script>
+	<script>
+		$("#Bebida").change(function()
+			{
+				$("#Bebida").children().each(function()
+				{
+					if(this.value == $('#Bebida').val())
+					{
+						var precio = $('#Bebida').val().split("₡");
+						var suma = parseInt(precio[1]) + parseInt($("#col_title").val());
+						$("#col_title").val(suma);
+					}
+				});
+				// console.log($("#col_title").val());
+			});
+	</script>
+	<script>
+		$("#Postre").change(function()
+			{
+				$("#Postre").children().each(function()
+				{
+					if(this.value == $('#Postre').val())
+					{
+						var precio = $('#Postre').val().split("₡");
+						var suma = parseInt(precio[1]) + parseInt($("#col_title").val());
+						$("#col_title").val(suma);
+					}
+				});
+				// console.log($("#col_title").val());
+			});
+	</script>
+	
 	</div>
 	
 	<script src="../js/bootstrap.bundle.js"></script>

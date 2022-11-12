@@ -44,7 +44,7 @@ create table tiempos(
 
 create table pedidos(
 	id int primary key NOT NULL AUTO_INCREMENT,
-    alimento varchar(15),
+    alimento varchar(100),
     usuario_id int,
     fecha date,
     precio int

@@ -23,7 +23,6 @@ if(isset($_POST['insertar_usuario']))
     if($query_run)
     {   
         echo "<script>Registrado(true)</script>";
-       
     }
     else
     {

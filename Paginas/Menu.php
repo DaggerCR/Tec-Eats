@@ -13,7 +13,7 @@
 		<h2  class="mb-3">Menu TEC Eats</h2>
 
 		<div class="container mb-4 d-block ">
-			<a type="button" class="btn  btn-light"  href="Desayuno2.php ?ban=false & id=<?= $_GET['id']; ?>">Desayuno</a>
+			<a type="button" class="btn  btn-light"  href="Desayuno.php ?ban=false & id=<?= $_GET['id']; ?>">Desayuno</a>
 		</div>
 		
 		<div class="container mb-4 d-block ">

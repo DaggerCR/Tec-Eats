@@ -10,3 +10,6 @@ INSERT INTO comidas (nombre,disponibilidad,tipo_id,precio,tiempo_id) VALUES ('Ga
 INSERT INTO tipos (id,nombre) VALUES (1,'Plato Principal'), (2,'Adicional'), (3,'Bebida'), (4,'Postre');
 
 INSERT INTO tiempos (id,nombre) VALUES (1,'Desayuno'),(2,'Almuerzo'),(3,'Media Tarde'),(4,'Cena');
+
+insert into usuario (nombre,apellido1,apellido2,correo,usuario,passw,tipoUsuario)
+values ("Pedro","Torres","Arias","correo@gmail.com","Pedro1","Dinosaurio1?",true);
