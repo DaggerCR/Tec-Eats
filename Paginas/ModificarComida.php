@@ -11,14 +11,17 @@ if(isset($_POST['modificar_comida']))
     $nombre = mysqli_real_escape_string($con, $_POST['Nombre']);
     $nombreNuevo = mysqli_real_escape_string($con, $_POST['NombreNuevo']);
     $disponibilidad = mysqli_real_escape_string($con, $_POST['Disponibilidad']);
-    $tipo = mysqli_real_escape_string($con, $_POST['Tipo']);
+    $tipo = mysqli_real_escape_string($con, $_POST['Tipo']);    
     $precio = mysqli_real_escape_string($con, $_POST['Precio']);
     $tiempo= mysqli_real_escape_string($con, $_POST['Tiempo']);
 
     $query = "UPDATE comidas 
-                SET nombre = '$nombreNuevo', disponibilidad='$disponibilidad',tipo_id = tipos.id, precio='$precio',tiempo_id=tiempos.id 
-                FROM tipos,tiempos 
-                WHERE tipos.nombre='$tipo' AND tiempos.nombre='$tiempo' AND comidas.nombre='$nombre'";
+                SET nombre = '$nombreNuevo', 
+                    disponibilidad='$disponibilidad',
+                    tipo_id=(SELECT id FROM tipos WHERE nombre='$tipo'), 
+                    precio='$precio',
+                    tiempo_id=(SELECT id FROM tiempos WHERE nombre='$tiempo')
+                WHERE nombre='$nombre'";
 
     $query_run = mysqli_query($con, $query);
     if($query_run)
