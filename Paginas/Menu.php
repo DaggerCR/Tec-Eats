@@ -13,15 +13,19 @@
 		<h2  class="mb-3">Menu TEC Eats</h2>
 
 		<div class="container mb-4 d-block ">
-			<a type="button" class="btn  btn-light"  href="Desayuno.php ?ban=false & id=<?= $_GET['id']; ?>">Desayuno</a>
+			<a type="button" class="btn  btn-light"  href="Desayuno.php ?id=<?= $_GET['id']; ?>">Desayuno</a>
 		</div>
 		
 		<div class="container mb-4 d-block ">
-			<a type="button" class="btn btn-light"  href="Citas.php ?id=<?= $_GET['id']; ?>">Almuerzo</a>
+			<a type="button" class="btn btn-light"  href="Almuerzo.php ?id=<?= $_GET['id']; ?>">Almuerzo</a>
+		</div>
+		
+		<div class="container mb-4 d-block ">
+			<a type="button" class="btn btn-light"  href="Cafe.php ?id=<?= $_GET['id']; ?>">Cafe</a>
 		</div>
 
 		<div class="container mb-4 d-block ">
-			<a type="button" class="btn btn-light"  href="Tramites.php ?id=<?= $_GET['id']; ?>">Cena</a>
+			<a type="button" class="btn btn-light"  href="Cena.php ?id=<?= $_GET['id']; ?>">Cena</a>
 		</div>
 
 		<div class="container mb-4 d-block ">
