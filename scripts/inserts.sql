@@ -1,4 +1,4 @@
-use teceatsfinal;	
+use teceatsfinal;
 
 INSERT INTO comidas (nombre,disponibilidad,tipo_id,precio,tiempo_id) VALUES ('Gallo Pinto',1,1,"800",1),
 ('Pancakes',1,1,"900",1),('Natilla',1,2,"100",1),('Tostadas',1,2,"200",1), ('Jugo de Naranja',1,3,"300",1),
@@ -13,3 +13,5 @@ INSERT INTO tiempos (id,nombre) VALUES (1,'Desayuno'),(2,'Almuerzo'),(3,'Media T
 
 insert into usuario (nombre,apellido1,apellido2,correo,usuario,passw,tipoUsuario)
 values ("Pedro","Torres","Arias","correo@gmail.com","Pedro1","Dinosaurio1?",true);
+
+

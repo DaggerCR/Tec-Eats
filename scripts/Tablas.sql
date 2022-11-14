@@ -1,7 +1,6 @@
+drop schema if exists teceatsfinal;
 create schema teceatsfinal;
 use teceatsfinal;
-
-
 
 create table usuario (
 	id int primary key NOT NULL AUTO_INCREMENT,

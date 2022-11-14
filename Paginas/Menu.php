@@ -33,10 +33,6 @@
 		</div>
 
 		<div class="container mb-4 d-block ">
-			<a type="button" class="btn btn-light"  href="Transferencias.php ?id=<?= $_GET['id']; ?>">Ver mi historial</a>
-		</div>
-
-		<div class="container mb-4 d-block ">
 			<a type="button" class="btn btn-light"  href="../index.php">Salir</a>
 		</div>
 
