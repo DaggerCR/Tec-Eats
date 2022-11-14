@@ -1,0 +1,2362 @@
+//Todo
+
+function GestionCliente(Regis) {
+
+    if (Regis) {
+        alert('La gestion se realizo con exito');
+        location.href = "../Paginas/MenuGestionClientes.php"
+    }
+    else {
+        alert('No se pudo realizar la gestion correctamente');
+        location.href = "../Paginas/MenuGestionClientes.php"
+    }
+}
+
+function ValidadoCarrito(control,id)
+ {
+    if (control)
+	{
+		location.href="Menu.php ?id="+id;	
+    }
+    else
+	{
+      location.href="Menu.php ?id="+id;
+    }
+  }
+  
+  function Validado(valido,ide) {
+  
+    if (valido) {
+       location.href="MenuAdmin.php ?id="+ide;
+    }
+    else{
+      location.href="../index.php"
+      alert('Usuario o contraseña  no valida');
+      
+    }
+  }
+
+function Validado(valido,admi,id)
+ {
+    if (valido)
+	{
+		if(admi)
+		{
+			location.href="MenuAdmin.php ?id="+id;
+		}
+		else
+		{
+			location.href="Menu.php ?id="+id;
+		}	
+    }
+    else
+	{
+      location.href="../index.php"
+	  console.log('test2');
+      alert('Usuario o contraseña  no valida!');
+      
+    }
+  }
+  
+  
+function Registrado(Regis) {
+  
+  if (Regis) {
+     alert('Registrado Correctamente');
+     location.href="../index.php"
+  }
+  else{
+    alert('No se pudo registrar correctamente');
+    location.href="/Registrarse.php"
+  }
+}
+
+function GestionTipo(Regis) {
+
+    if (Regis) {
+        alert('La gestion se realizo con exito');
+        location.href = "../Paginas/MenuGestionTipos.php"
+    }
+    else {
+        alert('No se pudo realizar la gestion correctamente');
+        location.href = "../Paginas/MenuGestionTipos.php"
+    }
+}
+
+function GestionTiempo(Regis) {
+
+    if (Regis) {
+        alert('La gestion se realizo con exito');
+        location.href = "../Paginas/MenuGestionTiempos.php"
+    }
+    else {
+        alert('No se pudo realizar la gestion correctamente');
+        location.href = "../Paginas/MenuGestionTiempos.php"
+    }
+}
+
+function GestionPedido(Regis) {
+
+    if (Regis) {
+        alert('La gestion se realizo con exito');
+        location.href = "../Paginas/MenuGestionPedidos.php"
+    }
+    else {
+        alert('No se pudo realizar la gestion correctamente');
+        location.href = "../Paginas/MenuGestionPedidos.php"
+    }
+}
+
+<script src="../js/Validado.js">
+</script>
+
+
+<?php
+session_start();
+require '../dbcon.php';
+
+global $ID;
+
+if(isset($_POST['validar_usuario']))
+{
+    $usuario = mysqli_real_escape_string($con, $_POST['Usuario']);
+    $contra= mysqli_real_escape_string($con, $_POST['Contra']);
+
+    $query  = "SELECT * FROM usuario WHERE usuario='$usuario'";
+    $result = mysqli_query($con, $query);
+        
+    if ($result->num_rows > 0)
+    {
+        $row = $result->fetch_assoc(); 
+        
+        echo "contraseña: " . $row["passw"];
+		echo "ID: " . $row["id"];
+		
+			if($contra==$row["passw"])
+			{
+				$ID = $row["id"];
+				if($row["tipoUsuario"] == 1)
+					echo "<script>Validado(true,true,$ID)</script>";
+				else
+					echo "<script>Validado(true,false,$ID)</script>";
+			   
+			}
+			else
+			{
+				echo "<script>Validado(false,true,$ID)</script>";
+			}
+		
+
+        
+    } 
+    else 
+    {
+        echo "<script>Validado(false,false,$ID)</script>";
+    }
+}
+
+?>
+
+
+<?php
+   error_reporting(0);
+   require '../dbcon.php';
+
+?>
+
+
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Almuerzo TEC Eats</title>
+	<script src="https://code.jquery.com/jquery-3.1.0.min.js" type='text/javascript'></script>
+
+	<link rel="stylesheet"  href="../css/bootstrap.css">
+
+</head>
+<body class="container">
+
+	<div class="container mt-5 "  align="center" >
+		<h2  class="mb-3" >Almuerzo</h2>
+		<h5  class="mb-3" align="left" >Plato Principal</h5>
+			
+		<div class="container mb-4 d-block ">
+		<select class="form-select" aria-label="Default select example" id="PlatoPrincipal" name="PlatoPrincipal">
+			<option selected>Ninguno</option>
+			
+			<?php
+				$query = "SELECT * FROM comidas WHERE tipo_id= 1 and tiempo_id = 2";
+				$query_run = mysqli_query($con, $query);
+
+				if(mysqli_num_rows($query_run) > 0)
+				{
+					foreach($query_run as $Comida)
+					{				
+			?>	
+						<option><?=$Comida['nombre']?> - ₡<?=$Comida['precio']?></option>	
+						<?php
+					} 
+				}
+				?>
+		</select>
+		
+		</div>
+		<h5  class="mb-3" align="left" >Adicional</h5>
+		<div class="container mb-4 d-block ">
+			<select class="form-select" aria-label="Default select example" id="Adicional" name="Adicional">
+		<option selected>Ninguno</option>
+		
+		<?php
+            $query = "SELECT * FROM comidas WHERE tipo_id= 2 and tiempo_id = 2";
+			$query_run = mysqli_query($con, $query);
+
+			if(mysqli_num_rows($query_run) > 0)
+			{
+				foreach($query_run as $Comida)
+				{				
+		?>	
+					<option><?=$Comida['nombre']?> - ₡<?=$Comida['precio']?></option>	
+					<?php
+				} 
+			}
+			?>
+		</select>
+		</div>
+		
+		
+		<h5  class="mb-3" align="left" >Bebida</h5>
+		<div class="container mb-4 d-block ">
+			<select class="form-select" aria-label="Default select example" id="Bebida" name="Bebida">
+		<option selected>Ninguna</option>
+		
+		<?php
+            $query = "SELECT * FROM comidas WHERE tipo_id= 3 and tiempo_id = 2";
+			$query_run = mysqli_query($con, $query);
+
+			if(mysqli_num_rows($query_run) > 0)
+			{
+				foreach($query_run as $Comida)
+				{				
+		?>	
+					<option><?=$Comida['nombre']?> - ₡<?=$Comida['precio']?></option>	
+					<?php
+				} 
+			}
+			?>
+		</select>
+		</div>
+		<h5  class="mb-3" align="left" >Postre</h5>
+		<div class="container mb-4 d-block ">
+			<select class="form-select" aria-label="Default select example" id="Postre" name="Postre">
+		<option selected>Ninguno</option>
+		
+		<?php
+            $query = "SELECT * FROM comidas WHERE tipo_id= 4 and tiempo_id = 2";
+			$query_run = mysqli_query($con, $query);
+
+			if(mysqli_num_rows($query_run) > 0)
+			{
+				foreach($query_run as $Comida)
+				{				
+		?>	
+					<option><?=$Comida['nombre']?> - ₡<?=$Comida['precio']?></option>	
+					<?php
+				} 
+			}
+			?>
+		</select>
+		</div>
+		
+		
+	</div>
+	
+	<form action="InsertarCarrito.php ?id=<?= $_GET['id']; ?>" method="POST">
+		<h5  class="mb-3" align="left" >Comida: </h5>
+		<input class="form-control" name="col_title2" id="col_title2" value=''align="left"/>
+		
+		<h5  class="mb-3" align="left" >Total: </h5>
+		<input class="form-control" name="col_title" id="col_title" value='0'align="left"/>
+		
+		<button type="submit" class="btn btn-light mt-5" name="registrar_carrito"> Agregar al carrito</button>		
+	</form>
+	
+	<script type='text/javascript'>
+
+        $("#PlatoPrincipal").change(function()
+		{
+            $("#PlatoPrincipal").children().each(function()
+			{
+                if(this.value == $('#PlatoPrincipal').val())
+				{
+					var precio = $('#PlatoPrincipal').val().split(" -");
+					var suma = $("#col_title2").val() + precio[0] + ",";
+                    $("#col_title2").val(suma);
+                }
+            });
+            // console.log($("#col_title").val());
+        });
+		
+		$("#Adicional").change(function()
+		{
+            $("#Adicional").children().each(function()
+			{
+                if(this.value == $('#Adicional').val())
+				{
+					var precio = $('#Adicional').val().split(" -");
+					var suma = $("#col_title2").val() + precio[0] + ",";
+                    $("#col_title2").val(suma);
+                }
+            });
+            // console.log($("#col_title").val());
+        });
+		
+		$("#Bebida").change(function()
+		{
+            $("#Bebida").children().each(function()
+			{
+                if(this.value == $('#Bebida').val())
+				{
+					var precio = $('#Bebida').val().split(" -");
+					var suma = $("#col_title2").val() + precio[0] + ",";
+                    $("#col_title2").val(suma);
+                }
+            });
+            // console.log($("#col_title").val());
+        });
+		
+		$("#Postre").change(function()
+		{
+            $("#Postre").children().each(function()
+			{
+                if(this.value == $('#Postre').val())
+				{
+					var precio = $('#Postre').val().split(" -");
+					var suma = $("#col_title2").val() + precio[0] + ",";
+                    $("#col_title2").val(suma);
+                }
+            });
+            // console.log($("#col_title").val());
+        });
+
+    </script>
+	
+	
+	<script type='text/javascript'>
+
+        $("#PlatoPrincipal").change(function()
+		{
+            $("#PlatoPrincipal").children().each(function()
+			{
+                if(this.value == $('#PlatoPrincipal').val())
+				{
+					var precio = $('#PlatoPrincipal').val().split("₡");
+					var suma = parseInt(precio[1]) + parseInt($("#col_title").val());
+                    $("#col_title").val(suma);
+                }
+            });
+            // console.log($("#col_title").val());
+        });
+
+    </script>
+	
+	<script>
+		$("#Adicional").change(function()
+			{
+				$("#Adicional").children().each(function()
+				{
+					if(this.value == $('#Adicional').val())
+					{
+						var precio = $('#Adicional').val().split("₡");
+						var suma = parseInt(precio[1]) + parseInt($("#col_title").val());
+						$("#col_title").val(suma);
+					}
+				});
+				// console.log($("#col_title").val());
+			});
+	</script>
+	<script>
+		$("#Bebida").change(function()
+			{
+				$("#Bebida").children().each(function()
+				{
+					if(this.value == $('#Bebida').val())
+					{
+						var precio = $('#Bebida').val().split("₡");
+						var suma = parseInt(precio[1]) + parseInt($("#col_title").val());
+						$("#col_title").val(suma);
+					}
+				});
+				// console.log($("#col_title").val());
+			});
+	</script>
+	<script>
+		$("#Postre").change(function()
+			{
+				$("#Postre").children().each(function()
+				{
+					if(this.value == $('#Postre').val())
+					{
+						var precio = $('#Postre').val().split("₡");
+						var suma = parseInt(precio[1]) + parseInt($("#col_title").val());
+						$("#col_title").val(suma);
+					}
+				});
+				// console.log($("#col_title").val());
+			});
+	</script>
+	
+	</div>
+	
+	<script src="../js/bootstrap.bundle.js"></script>
+	
+</form>
+</body>
+</html>
+
+
+<?php
+   error_reporting(0);
+   require '../dbcon.php';
+
+?>
+
+
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Café TEC Eats</title>
+	<script src="https://code.jquery.com/jquery-3.1.0.min.js" type='text/javascript'></script>
+
+	<link rel="stylesheet"  href="../css/bootstrap.css">
+
+</head>
+<body class="container">
+
+	<div class="container mt-5 "  align="center" >
+		<h2  class="mb-3" >Café</h2>
+		<h5  class="mb-3" align="left" >Plato Principal</h5>
+			
+		<div class="container mb-4 d-block ">
+		<select class="form-select" aria-label="Default select example" id="PlatoPrincipal" name="PlatoPrincipal">
+			<option selected>Ninguno</option>
+			
+			<?php
+				$query = "SELECT * FROM comidas WHERE tipo_id= 1 and tiempo_id = 3";
+				$query_run = mysqli_query($con, $query);
+
+				if(mysqli_num_rows($query_run) > 0)
+				{
+					foreach($query_run as $Comida)
+					{				
+			?>	
+						<option><?=$Comida['nombre']?> - ₡<?=$Comida['precio']?></option>	
+						<?php
+					} 
+				}
+				?>
+		</select>
+		
+		</div>
+		<h5  class="mb-3" align="left" >Adicional</h5>
+		<div class="container mb-4 d-block ">
+			<select class="form-select" aria-label="Default select example" id="Adicional" name="Adicional">
+		<option selected>Ninguno</option>
+		
+		<?php
+            $query = "SELECT * FROM comidas WHERE tipo_id= 2 and tiempo_id = 3";
+			$query_run = mysqli_query($con, $query);
+
+			if(mysqli_num_rows($query_run) > 0)
+			{
+				foreach($query_run as $Comida)
+				{				
+		?>	
+					<option><?=$Comida['nombre']?> - ₡<?=$Comida['precio']?></option>	
+					<?php
+				} 
+			}
+			?>
+		</select>
+		</div>
+		
+		
+		<h5  class="mb-3" align="left" >Bebida</h5>
+		<div class="container mb-4 d-block ">
+			<select class="form-select" aria-label="Default select example" id="Bebida" name="Bebida">
+		<option selected>Ninguna</option>
+		
+		<?php
+            $query = "SELECT * FROM comidas WHERE tipo_id= 3 and tiempo_id = 3";
+			$query_run = mysqli_query($con, $query);
+
+			if(mysqli_num_rows($query_run) > 0)
+			{
+				foreach($query_run as $Comida)
+				{				
+		?>	
+					<option><?=$Comida['nombre']?> - ₡<?=$Comida['precio']?></option>	
+					<?php
+				} 
+			}
+			?>
+		</select>
+		</div>
+		<h5  class="mb-3" align="left" >Postre</h5>
+		<div class="container mb-4 d-block ">
+			<select class="form-select" aria-label="Default select example" id="Postre" name="Postre">
+		<option selected>Ninguno</option>
+		
+		<?php
+            $query = "SELECT * FROM comidas WHERE tipo_id= 4 and tiempo_id = 3";
+			$query_run = mysqli_query($con, $query);
+
+			if(mysqli_num_rows($query_run) > 0)
+			{
+				foreach($query_run as $Comida)
+				{				
+		?>	
+					<option><?=$Comida['nombre']?> - ₡<?=$Comida['precio']?></option>	
+					<?php
+				} 
+			}
+			?>
+		</select>
+		</div>
+		
+		
+	</div>
+	
+	<form action="InsertarCarrito.php ?id=<?= $_GET['id']; ?>" method="POST">
+		<h5  class="mb-3" align="left" >Comida: </h5>
+		<input class="form-control" name="col_title2" id="col_title2" value=''align="left"/>
+		
+		<h5  class="mb-3" align="left" >Total: </h5>
+		<input class="form-control" name="col_title" id="col_title" value='0'align="left"/>
+		
+		<button type="submit" class="btn btn-light mt-5" name="registrar_carrito"> Agregar al carrito</button>		
+	</form>
+	
+	<script type='text/javascript'>
+
+        $("#PlatoPrincipal").change(function()
+		{
+            $("#PlatoPrincipal").children().each(function()
+			{
+                if(this.value == $('#PlatoPrincipal').val())
+				{
+					var precio = $('#PlatoPrincipal').val().split(" -");
+					var suma = $("#col_title2").val() + precio[0] + ",";
+                    $("#col_title2").val(suma);
+                }
+            });
+            // console.log($("#col_title").val());
+        });
+		
+		$("#Adicional").change(function()
+		{
+            $("#Adicional").children().each(function()
+			{
+                if(this.value == $('#Adicional').val())
+				{
+					var precio = $('#Adicional').val().split(" -");
+					var suma = $("#col_title2").val() + precio[0] + ",";
+                    $("#col_title2").val(suma);
+                }
+            });
+            // console.log($("#col_title").val());
+        });
+		
+		$("#Bebida").change(function()
+		{
+            $("#Bebida").children().each(function()
+			{
+                if(this.value == $('#Bebida').val())
+				{
+					var precio = $('#Bebida').val().split(" -");
+					var suma = $("#col_title2").val() + precio[0] + ",";
+                    $("#col_title2").val(suma);
+                }
+            });
+            // console.log($("#col_title").val());
+        });
+		
+		$("#Postre").change(function()
+		{
+            $("#Postre").children().each(function()
+			{
+                if(this.value == $('#Postre').val())
+				{
+					var precio = $('#Postre').val().split(" -");
+					var suma = $("#col_title2").val() + precio[0] + ",";
+                    $("#col_title2").val(suma);
+                }
+            });
+            // console.log($("#col_title").val());
+        });
+
+    </script>
+	
+	
+	<script type='text/javascript'>
+
+        $("#PlatoPrincipal").change(function()
+		{
+            $("#PlatoPrincipal").children().each(function()
+			{
+                if(this.value == $('#PlatoPrincipal').val())
+				{
+					var precio = $('#PlatoPrincipal').val().split("₡");
+					var suma = parseInt(precio[1]) + parseInt($("#col_title").val());
+                    $("#col_title").val(suma);
+                }
+            });
+            // console.log($("#col_title").val());
+        });
+
+    </script>
+	
+	<script>
+		$("#Adicional").change(function()
+			{
+				$("#Adicional").children().each(function()
+				{
+					if(this.value == $('#Adicional').val())
+					{
+						var precio = $('#Adicional').val().split("₡");
+						var suma = parseInt(precio[1]) + parseInt($("#col_title").val());
+						$("#col_title").val(suma);
+					}
+				});
+				// console.log($("#col_title").val());
+			});
+	</script>
+	<script>
+		$("#Bebida").change(function()
+			{
+				$("#Bebida").children().each(function()
+				{
+					if(this.value == $('#Bebida').val())
+					{
+						var precio = $('#Bebida').val().split("₡");
+						var suma = parseInt(precio[1]) + parseInt($("#col_title").val());
+						$("#col_title").val(suma);
+					}
+				});
+				// console.log($("#col_title").val());
+			});
+	</script>
+	<script>
+		$("#Postre").change(function()
+			{
+				$("#Postre").children().each(function()
+				{
+					if(this.value == $('#Postre').val())
+					{
+						var precio = $('#Postre').val().split("₡");
+						var suma = parseInt(precio[1]) + parseInt($("#col_title").val());
+						$("#col_title").val(suma);
+					}
+				});
+				// console.log($("#col_title").val());
+			});
+	</script>
+	
+	</div>
+	
+	<script src="../js/bootstrap.bundle.js"></script>
+	
+</form>
+</body>
+</html>
+
+
+<?php
+   error_reporting(0);
+   require '../dbcon.php';
+
+?>
+
+
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Cena TEC Eats</title>
+	<script src="https://code.jquery.com/jquery-3.1.0.min.js" type='text/javascript'></script>
+
+	<link rel="stylesheet"  href="../css/bootstrap.css">
+
+</head>
+<body class="container">
+
+	<div class="container mt-5 "  align="center" >
+		<h2  class="mb-3" >Cena</h2>
+		<h5  class="mb-3" align="left" >Plato Principal</h5>
+			
+		<div class="container mb-4 d-block ">
+		<select class="form-select" aria-label="Default select example" id="PlatoPrincipal" name="PlatoPrincipal">
+			<option selected>Ninguno</option>
+			
+			<?php
+				$query = "SELECT * FROM comidas WHERE tipo_id= 1 and tiempo_id = 4";
+				$query_run = mysqli_query($con, $query);
+
+				if(mysqli_num_rows($query_run) > 0)
+				{
+					foreach($query_run as $Comida)
+					{				
+			?>	
+						<option><?=$Comida['nombre']?> - ₡<?=$Comida['precio']?></option>	
+						<?php
+					} 
+				}
+				?>
+		</select>
+		
+		</div>
+		<h5  class="mb-3" align="left" >Adicional</h5>
+		<div class="container mb-4 d-block ">
+			<select class="form-select" aria-label="Default select example" id="Adicional" name="Adicional">
+		<option selected>Ninguno</option>
+		
+		<?php
+            $query = "SELECT * FROM comidas WHERE tipo_id= 2 and tiempo_id = 4";
+			$query_run = mysqli_query($con, $query);
+
+			if(mysqli_num_rows($query_run) > 0)
+			{
+				foreach($query_run as $Comida)
+				{				
+		?>	
+					<option><?=$Comida['nombre']?> - ₡<?=$Comida['precio']?></option>	
+					<?php
+				} 
+			}
+			?>
+		</select>
+		</div>
+		
+		
+		<h5  class="mb-3" align="left" >Bebida</h5>
+		<div class="container mb-4 d-block ">
+			<select class="form-select" aria-label="Default select example" id="Bebida" name="Bebida">
+		<option selected>Ninguna</option>
+		
+		<?php
+            $query = "SELECT * FROM comidas WHERE tipo_id= 3 and tiempo_id = 4";
+			$query_run = mysqli_query($con, $query);
+
+			if(mysqli_num_rows($query_run) > 0)
+			{
+				foreach($query_run as $Comida)
+				{				
+		?>	
+					<option><?=$Comida['nombre']?> - ₡<?=$Comida['precio']?></option>	
+					<?php
+				} 
+			}
+			?>
+		</select>
+		</div>
+		<h5  class="mb-3" align="left" >Postre</h5>
+		<div class="container mb-4 d-block ">
+			<select class="form-select" aria-label="Default select example" id="Postre" name="Postre">
+		<option selected>Ninguno</option>
+		
+		<?php
+            $query = "SELECT * FROM comidas WHERE tipo_id= 4 and tiempo_id = 4";
+			$query_run = mysqli_query($con, $query);
+
+			if(mysqli_num_rows($query_run) > 0)
+			{
+				foreach($query_run as $Comida)
+				{				
+		?>	
+					<option><?=$Comida['nombre']?> - ₡<?=$Comida['precio']?></option>	
+					<?php
+				} 
+			}
+			?>
+		</select>
+		</div>
+		
+		
+	</div>
+	
+	<form action="InsertarCarrito.php ?id=<?= $_GET['id']; ?>" method="POST">
+		<h5  class="mb-3" align="left" >Comida: </h5>
+		<input class="form-control" name="col_title2" id="col_title2" value=''align="left"/>
+		
+		<h5  class="mb-3" align="left" >Total: </h5>
+		<input class="form-control" name="col_title" id="col_title" value='0'align="left"/>
+		
+		<button type="submit" class="btn btn-light mt-5" name="registrar_carrito"> Agregar al carrito</button>		
+	</form>
+	
+	<script type='text/javascript'>
+
+        $("#PlatoPrincipal").change(function()
+		{
+            $("#PlatoPrincipal").children().each(function()
+			{
+                if(this.value == $('#PlatoPrincipal').val())
+				{
+					var precio = $('#PlatoPrincipal').val().split(" -");
+					var suma = $("#col_title2").val() + precio[0] + ",";
+                    $("#col_title2").val(suma);
+                }
+            });
+            // console.log($("#col_title").val());
+        });
+		
+		$("#Adicional").change(function()
+		{
+            $("#Adicional").children().each(function()
+			{
+                if(this.value == $('#Adicional').val())
+				{
+					var precio = $('#Adicional').val().split(" -");
+					var suma = $("#col_title2").val() + precio[0] + ",";
+                    $("#col_title2").val(suma);
+                }
+            });
+            // console.log($("#col_title").val());
+        });
+		
+		$("#Bebida").change(function()
+		{
+            $("#Bebida").children().each(function()
+			{
+                if(this.value == $('#Bebida').val())
+				{
+					var precio = $('#Bebida').val().split(" -");
+					var suma = $("#col_title2").val() + precio[0] + ",";
+                    $("#col_title2").val(suma);
+                }
+            });
+            // console.log($("#col_title").val());
+        });
+		
+		$("#Postre").change(function()
+		{
+            $("#Postre").children().each(function()
+			{
+                if(this.value == $('#Postre').val())
+				{
+					var precio = $('#Postre').val().split(" -");
+					var suma = $("#col_title2").val() + precio[0] + ",";
+                    $("#col_title2").val(suma);
+                }
+            });
+            // console.log($("#col_title").val());
+        });
+
+    </script>
+	
+	
+	<script type='text/javascript'>
+
+        $("#PlatoPrincipal").change(function()
+		{
+            $("#PlatoPrincipal").children().each(function()
+			{
+                if(this.value == $('#PlatoPrincipal').val())
+				{
+					var precio = $('#PlatoPrincipal').val().split("₡");
+					var suma = parseInt(precio[1]) + parseInt($("#col_title").val());
+                    $("#col_title").val(suma);
+                }
+            });
+            // console.log($("#col_title").val());
+        });
+
+    </script>
+	
+	<script>
+		$("#Adicional").change(function()
+			{
+				$("#Adicional").children().each(function()
+				{
+					if(this.value == $('#Adicional').val())
+					{
+						var precio = $('#Adicional').val().split("₡");
+						var suma = parseInt(precio[1]) + parseInt($("#col_title").val());
+						$("#col_title").val(suma);
+					}
+				});
+				// console.log($("#col_title").val());
+			});
+	</script>
+	<script>
+		$("#Bebida").change(function()
+			{
+				$("#Bebida").children().each(function()
+				{
+					if(this.value == $('#Bebida').val())
+					{
+						var precio = $('#Bebida').val().split("₡");
+						var suma = parseInt(precio[1]) + parseInt($("#col_title").val());
+						$("#col_title").val(suma);
+					}
+				});
+				// console.log($("#col_title").val());
+			});
+	</script>
+	<script>
+		$("#Postre").change(function()
+			{
+				$("#Postre").children().each(function()
+				{
+					if(this.value == $('#Postre').val())
+					{
+						var precio = $('#Postre').val().split("₡");
+						var suma = parseInt(precio[1]) + parseInt($("#col_title").val());
+						$("#col_title").val(suma);
+					}
+				});
+				// console.log($("#col_title").val());
+			});
+	</script>
+	
+	</div>
+	
+	<script src="../js/bootstrap.bundle.js"></script>
+	
+</form>
+</body>
+</html>
+
+
+<?php
+   error_reporting(0);
+   require '../dbcon.php';
+
+?>
+
+
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Desayuno TEC Eats</title>
+	<script src="https://code.jquery.com/jquery-3.1.0.min.js" type='text/javascript'></script>
+
+	<link rel="stylesheet"  href="../css/bootstrap.css">
+
+</head>
+<body class="container">
+
+	<div class="container mt-5 "  align="center" >
+		<h2  class="mb-3" >Desayuno</h2>
+		<h5  class="mb-3" align="left" >Plato Principal</h5>
+			
+		<div class="container mb-4 d-block ">
+		<select class="form-select" aria-label="Default select example" id="PlatoPrincipal" name="PlatoPrincipal">
+			<option selected>Ninguno</option>
+			
+			<?php
+				$query = "SELECT * FROM comidas WHERE tipo_id= 1 and tiempo_id = 1";
+				$query_run = mysqli_query($con, $query);
+
+				if(mysqli_num_rows($query_run) > 0)
+				{
+					foreach($query_run as $Comida)
+					{				
+			?>	
+						<option><?=$Comida['nombre']?> - ₡<?=$Comida['precio']?></option>	
+						<?php
+					} 
+				}
+				?>
+		</select>
+		
+		</div>
+		<h5  class="mb-3" align="left" >Adicional</h5>
+		<div class="container mb-4 d-block ">
+			<select class="form-select" aria-label="Default select example" id="Adicional" name="Adicional">
+		<option selected>Ninguno</option>
+		
+		<?php
+            $query = "SELECT * FROM comidas WHERE tipo_id= 2 and tiempo_id = 1";
+			$query_run = mysqli_query($con, $query);
+
+			if(mysqli_num_rows($query_run) > 0)
+			{
+				foreach($query_run as $Comida)
+				{				
+		?>	
+					<option><?=$Comida['nombre']?> - ₡<?=$Comida['precio']?></option>	
+					<?php
+				} 
+			}
+			?>
+		</select>
+		</div>
+		
+		
+		<h5  class="mb-3" align="left" >Bebida</h5>
+		<div class="container mb-4 d-block ">
+			<select class="form-select" aria-label="Default select example" id="Bebida" name="Bebida">
+		<option selected>Ninguna</option>
+		
+		<?php
+            $query = "SELECT * FROM comidas WHERE tipo_id= 3 and tiempo_id = 1";
+			$query_run = mysqli_query($con, $query);
+
+			if(mysqli_num_rows($query_run) > 0)
+			{
+				foreach($query_run as $Comida)
+				{				
+		?>	
+					<option><?=$Comida['nombre']?> - ₡<?=$Comida['precio']?></option>	
+					<?php
+				} 
+			}
+			?>
+		</select>
+		</div>
+		<h5  class="mb-3" align="left" >Postre</h5>
+		<div class="container mb-4 d-block ">
+			<select class="form-select" aria-label="Default select example" id="Postre" name="Postre">
+		<option selected>Ninguno</option>
+		
+		<?php
+            $query = "SELECT * FROM comidas WHERE tipo_id= 4 and tiempo_id = 1";
+			$query_run = mysqli_query($con, $query);
+
+			if(mysqli_num_rows($query_run) > 0)
+			{
+				foreach($query_run as $Comida)
+				{				
+		?>	
+					<option><?=$Comida['nombre']?> - ₡<?=$Comida['precio']?></option>	
+					<?php
+				} 
+			}
+			?>
+		</select>
+		</div>
+		
+		
+	</div>
+	
+	<form action="InsertarCarrito.php ?id=<?= $_GET['id']; ?>" method="POST">
+		<h5  class="mb-3" align="left" >Comida: </h5>
+		<input class="form-control" name="col_title2" id="col_title2" value=''align="left"/>
+		
+		<h5  class="mb-3" align="left" >Total: </h5>
+		<input class="form-control" name="col_title" id="col_title" value='0'align="left"/>
+		
+		<button type="submit" class="btn btn-light mt-5" name="registrar_carrito"> Agregar al carrito</button>		
+	</form>
+	
+	<script type='text/javascript'>
+
+        $("#PlatoPrincipal").change(function()
+		{
+            $("#PlatoPrincipal").children().each(function()
+			{
+                if(this.value == $('#PlatoPrincipal').val())
+				{
+					var precio = $('#PlatoPrincipal').val().split(" -");
+					var suma = $("#col_title2").val() + precio[0] + ",";
+                    $("#col_title2").val(suma);
+                }
+            });
+            // console.log($("#col_title").val());
+        });
+		
+		$("#Adicional").change(function()
+		{
+            $("#Adicional").children().each(function()
+			{
+                if(this.value == $('#Adicional').val())
+				{
+					var precio = $('#Adicional').val().split(" -");
+					var suma = $("#col_title2").val() + precio[0] + ",";
+                    $("#col_title2").val(suma);
+                }
+            });
+            // console.log($("#col_title").val());
+        });
+		
+		$("#Bebida").change(function()
+		{
+            $("#Bebida").children().each(function()
+			{
+                if(this.value == $('#Bebida').val())
+				{
+					var precio = $('#Bebida').val().split(" -");
+					var suma = $("#col_title2").val() + precio[0] + ",";
+                    $("#col_title2").val(suma);
+                }
+            });
+            // console.log($("#col_title").val());
+        });
+		
+		$("#Postre").change(function()
+		{
+            $("#Postre").children().each(function()
+			{
+                if(this.value == $('#Postre').val())
+				{
+					var precio = $('#Postre').val().split(" -");
+					var suma = $("#col_title2").val() + precio[0] + ",";
+                    $("#col_title2").val(suma);
+                }
+            });
+            // console.log($("#col_title").val());
+        });
+
+    </script>
+	
+	
+	<script type='text/javascript'>
+
+        $("#PlatoPrincipal").change(function()
+		{
+            $("#PlatoPrincipal").children().each(function()
+			{
+                if(this.value == $('#PlatoPrincipal').val())
+				{
+					var precio = $('#PlatoPrincipal').val().split("₡");
+					var suma = parseInt(precio[1]) + parseInt($("#col_title").val());
+                    $("#col_title").val(suma);
+                }
+            });
+            // console.log($("#col_title").val());
+        });
+
+    </script>
+	
+	<script>
+		$("#Adicional").change(function()
+			{
+				$("#Adicional").children().each(function()
+				{
+					if(this.value == $('#Adicional').val())
+					{
+						var precio = $('#Adicional').val().split("₡");
+						var suma = parseInt(precio[1]) + parseInt($("#col_title").val());
+						$("#col_title").val(suma);
+					}
+				});
+				// console.log($("#col_title").val());
+			});
+	</script>
+	<script>
+		$("#Bebida").change(function()
+			{
+				$("#Bebida").children().each(function()
+				{
+					if(this.value == $('#Bebida').val())
+					{
+						var precio = $('#Bebida').val().split("₡");
+						var suma = parseInt(precio[1]) + parseInt($("#col_title").val());
+						$("#col_title").val(suma);
+					}
+				});
+				// console.log($("#col_title").val());
+			});
+	</script>
+	<script>
+		$("#Postre").change(function()
+			{
+				$("#Postre").children().each(function()
+				{
+					if(this.value == $('#Postre').val())
+					{
+						var precio = $('#Postre').val().split("₡");
+						var suma = parseInt(precio[1]) + parseInt($("#col_title").val());
+						$("#col_title").val(suma);
+					}
+				});
+				// console.log($("#col_title").val());
+			});
+	</script>
+	
+	</div>
+	
+	<script src="../js/bootstrap.bundle.js"></script>
+	
+</form>
+</body>
+</html>
+
+
+<?php
+   error_reporting(0);
+   require '../dbcon.php';
+
+?>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Ver Plato principal del desayuno</title>
+
+	<link rel="stylesheet"  href="../css/bootstrap.css">
+
+
+	<script>
+	function Ver(){
+		var cuentaE;
+		
+		cuentaE = document.getElementById('CuenS');
+		console.log(cuentaE.value);
+		location.href="VerCuentas.php ?ban=true  & id=<?= $_GET['id']; ?>& CuentaE="+cuentaE.value;
+		
+	};
+			
+	</script>
+	
+			
+
+<body class="container p-5">
+	
+
+	<div class="mt-5 "  align="center" >
+		<h1>Plato principal del desayuno</h1>
+		<select class="form-select" aria-label="Default select example" id="CuenS" name="CuentaSelect">
+		<option selected>Plato Principal</option>
+		
+		<?php
+            $query = "SELECT * FROM comidas WHERE tipo_id= 1 and tiempo_id = 1";
+			$query_run = mysqli_query($con, $query);
+
+			if(mysqli_num_rows($query_run) > 0)
+			{
+				foreach($query_run as $Comida)
+				{				
+		?>	
+					<option><?=$Comida['nombre']?></option>	
+					<?php
+				} 
+			}
+			?>
+		</select>
+
+		<a type="button" class="btn btn-light mt-3"  onclick="Ver()"> <h4>Agregar al Carrito</h4> </a>
+		<script src="../js/bootstrap.bundle.js"></script>
+	</div>
+</body>
+</html>
+
+<script src="../js/GestionCliente.js"></script>
+<?php
+session_start();
+require '../dbcon.php';
+
+
+if(isset($_POST['eliminar_cliente']))
+{
+    
+    $Gestion=false;
+    $nombre = mysqli_real_escape_string($con, $_POST['Nombre']);
+
+
+    $query = "DELETE FROM usuario WHERE nombre='$nombre'";
+
+    $query_run = mysqli_query($con, $query);
+    if($query_run)
+    {   
+        echo "<script>GestionCliente(true)</script>";
+       
+    }
+    else
+    {
+        echo "<script>GestionCliente(false)</script>";
+    }
+}
+?>
+
+<script src="../js/GestionComida.js"></script>
+<?php
+session_start();
+require '../dbcon.php';
+
+
+if(isset($_POST['eliminar_comida']))
+{
+    
+    $Gestion=false;
+    $nombre = mysqli_real_escape_string($con, $_POST['Nombre']);
+
+
+    $query = "DELETE FROM comidas WHERE nombre='$nombre'";
+
+    $query_run = mysqli_query($con, $query);
+    if($query_run)
+    {   
+        echo "<script>GestionComida(true)</script>";
+       
+    }
+    else
+    {
+        echo "<script>GestionComida(false)</script>";
+    }
+}
+?>
+
+<script src="../js/GestionPedido.js"></script>
+<?php
+session_start();
+require '../dbcon.php';
+
+
+if(isset($_POST['eliminar_pedido']))
+{
+    
+    $Gestion=false;
+    $alimento = mysqli_real_escape_string($con, $_POST['Alimento']);
+
+
+    $query = "DELETE FROM pedidos WHERE alimento='$alimento'";
+
+    $query_run = mysqli_query($con, $query);
+    if($query_run)
+    {   
+        echo "<script>GestionPedido(true)</script>";
+       
+    }
+    else
+    {
+        echo "<script>GestionPedido(false)</script>";
+    }
+}
+?>
+
+<script src="../js/Gestion.js"></script>
+<?php
+session_start();
+require '../dbcon.php';
+
+
+if(isset($_POST['eliminar_tiempo']))
+{
+    
+    $Gestion=false;
+    $nombre = mysqli_real_escape_string($con, $_POST['Nombre']);
+
+
+    $query = "DELETE FROM tiempos WHERE nombre='$nombre'";
+
+    $query_run = mysqli_query($con, $query);
+    if($query_run)
+    {   
+        echo "<script>Gestion(true)</script>";
+       
+    }
+    else
+    {
+        echo "<script>Gestion(false)</script>";
+    }
+}
+?>
+
+<?php
+    session_start();
+    require '../dbcon.php';
+?>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Eliminar cliente TEC Eats</title>
+
+	<link rel="stylesheet"  href="../css/bootstrap.css">
+
+	
+</head>
+<body class="container">
+	<div class="container mt-5 "  align="center">
+		<h1>Eliminar cliente TEC Eats</h1>
+		<form action="EliminarCliente.php" method="POST">
+
+            <div class="container mb-4 d-block ">
+            <select class="form-select" aria-label="Default select example" id="Nombre" name="Nombre">
+                
+                <?php
+                    $query = "SELECT * FROM usuario";
+                    $query_run = mysqli_query($con, $query);
+
+                    if(mysqli_num_rows($query_run) > 0)
+                    {
+                        foreach($query_run as $Comida)
+                        {				
+                ?>	
+                            <option><?=$Comida['nombre']?></option>	
+                            <?php
+                        } 
+                    }
+                    ?>
+            </select>
+            </div>
+
+			<button type="submit" class="btn btn-light mt-5" name="eliminar_cliente" > <h2>Eliminar</h2> </button>
+			<!-- href="../index.html" -->
+			
+		</form>
+
+	</div>
+	
+	
+	<script src="../js/bootstrap.bundle.js"></script>
+</body>
+</html>
+
+<?php
+    session_start();
+    require '../dbcon.php';
+?>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Modificar cliente TEC Eats</title>
+
+	<link rel="stylesheet"  href="../css/bootstrap.css">
+
+	
+</head>
+<body class="container">
+	<div class="container mt-5 "  align="center">
+		<h1>Modificar cliente TEC Eats</h1>
+		<form action="ModificarCliente.php" method="POST">
+
+            <div class="container mb-4 d-block ">
+                <select class="form-select" aria-label="Default select example" id="Nombre" name="Nombre">
+                    
+                    <?php
+                        $query = "SELECT * FROM usuario";
+                        $query_run = mysqli_query($con, $query);
+
+                        if(mysqli_num_rows($query_run) > 0)
+                        {
+                            foreach($query_run as $Comida)
+                            {				
+                    ?>	
+                                <option><?=$Comida['nombre']?></option>	
+                                <?php
+                            } 
+                        }
+                        ?>
+                </select>
+            </div>
+
+            <div class="form-group">
+            <div class="col-sm-10 mb-4 mt-5" >   
+				<input type="text" class="form-control" id="NombreNuevo" placeholder="Nombre Nuevo" name="NombreNuevo">
+			</div>
+			</div>
+
+			<div class="form-group">
+			<div class="col-sm-10 mb-4" >   
+				<input type="text" class="form-control" id="Apellido1" placeholder="Apellido 1" name="Apellido1">
+			</div>
+			</div>
+
+			<div class="form-group">
+			<div class="col-sm-10 mb-4" >   
+				<input type="text" class="form-control" id="Apellido2" placeholder="Apellido 2" name="Apellido2">
+			</div>
+			</div>
+
+			<div class="form-group">
+			<div class="col-sm-10 mb-4" >   
+				<input type="text" class="form-control" id="Usuario" placeholder="Nombre de usuario" name="Usuario">
+			</div>
+			</div>
+
+			<div class="form-group">
+			<div class="col-sm-10 mb-4">          
+				<input type="password" class="form-control" id="Contrase" placeholder="Contraseña"  
+				pattern="(?=.*\d)(?=.*[!,¡,#,¿,?,@])(?=.*[a-z])(?=.*[A-Z]).{8,}" title="La contraseña debe tener mas de 8 caracteres y minimo 1 digito ,1 minuscula,1 mayuscula y un 1 caracter especial(!¡#¿?@)" required name="Contra">
+			</div>
+			</div>
+
+			<div class="form-group">
+			<div class="col-sm-10 mb-4" >   
+				<input type="email" class="form-control" id="Correo" placeholder="Correo" name="Correo">
+			</div>
+			</div>
+
+            <div class="container mb-4 d-block ">
+            <select class="form-select" aria-label="Default select example" id="Tipo" name="Administrador">
+                
+                    <option>true</option>
+                    <option>false</option>
+            </select>
+            </div>
+
+			<button type="submit" class="btn btn-light mt-5" name="modificar_cliente" > <h2>Modificar</h2> </button>
+			<!-- href="../index.html" -->
+			
+		</form>
+
+	</div>
+	
+	
+	<script src="../js/bootstrap.bundle.js"></script>
+</body>
+</html>
+
+<?php
+    session_start();
+    require '../dbcon.php';
+?>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Eliminar comida TEC Eats</title>
+
+	<link rel="stylesheet"  href="../css/bootstrap.css">
+
+	
+</head>
+<body class="container">
+	<div class="container mt-5 "  align="center">
+		<h1>Eliminar comida TEC Eats</h1>
+		<form action="EliminarComida.php" method="POST">
+
+            <div class="container mb-4 d-block ">
+            <select class="form-select" aria-label="Default select example" id="Nombre" name="Nombre">
+                
+                <?php
+                    $query = "SELECT * FROM comidas";
+                    $query_run = mysqli_query($con, $query);
+
+                    if(mysqli_num_rows($query_run) > 0)
+                    {
+                        foreach($query_run as $Comida)
+                        {				
+                ?>	
+                            <option><?=$Comida['nombre']?></option>	
+                            <?php
+                        } 
+                    }
+                    ?>
+            </select>
+            </div>
+
+			<button type="submit" class="btn btn-light mt-5" name="eliminar_comida" > <h2>Eliminar</h2> </button>
+			<!-- href="../index.html" -->
+			
+		</form>
+
+	</div>
+	
+	
+	<script src="../js/bootstrap.bundle.js"></script>
+</body>
+</html>
+
+<?php
+    session_start();
+    require '../dbcon.php';
+?>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Modificar comida TEC Eats</title>
+
+	<link rel="stylesheet"  href="../css/bootstrap.css">
+
+	
+</head>
+<body class="container">
+	<div class="container mt-5 "  align="center">
+		<h1>Modificar comida TEC Eats</h1>
+		<form action="ModificarComida.php" method="POST">
+
+            <div class="container mb-4 d-block ">
+            <select class="form-select" aria-label="Default select example" id="Nombre" name="Nombre">
+                
+                <?php
+                    $query = "SELECT * FROM comidas";
+                    $query_run = mysqli_query($con, $query);
+
+                    if(mysqli_num_rows($query_run) > 0)
+                    {
+                        foreach($query_run as $Comida)
+                        {				
+                ?>	
+                            <option><?=$Comida['nombre']?></option>	
+                            <?php
+                        } 
+                    }
+                    ?>
+            </select>
+            </div>
+
+			<div class="form-group">
+			<div class="col-sm-10 mb-4 mt-5" >   
+				<input type="text" class="form-control" id="NombreNuevo" placeholder="Nombre Nuevo" name="NombreNuevo">
+			</div>
+			</div>
+
+			<div class="form-group">
+			<div class="col-sm-10 mb-4" >   
+				<input type="text" class="form-control" id="Disponibilidad" placeholder="Disponibilidad" name="Disponibilidad">
+			</div>
+			</div>
+
+			<div class="container mb-4 d-block ">
+            <select class="form-select" aria-label="Default select example" id="Tipo" name="Tipo">
+                
+                <?php
+                    $query = "SELECT * FROM tipos";
+                    $query_run = mysqli_query($con, $query);
+
+                    if(mysqli_num_rows($query_run) > 0)
+                    {
+                        foreach($query_run as $Comida)
+                        {				
+                ?>	
+                            <option><?=$Comida['nombre']?></option>	
+                            <?php
+                        } 
+                    }
+                    ?>
+            </select>
+            </div>
+
+			<div class="form-group">
+			<div class="col-sm-10 mb-4" >   
+				<input type="text" class="form-control" id="Precio" placeholder="Precio" name="Precio">
+			</div>
+			</div>
+
+			<div class="container mb-4 d-block ">
+                <select class="form-select" aria-label="Default select example" id="Tiempo" name="Tiempo">
+                    
+                    <?php
+                        $query = "SELECT * FROM tiempos";
+                        $query_run = mysqli_query($con, $query);
+
+                        if(mysqli_num_rows($query_run) > 0)
+                        {
+                            foreach($query_run as $Comida)
+                            {				
+                    ?>	
+                                <option><?=$Comida['nombre']?></option>	
+                                <?php
+                            } 
+                        }
+                        ?>
+                </select>
+                </div>
+
+			<button type="submit" class="btn btn-light mt-5" name="modificar_comida" > <h2>Modificar</h2> </button>
+			<!-- href="../index.html" -->
+			
+		</form>
+
+	</div>
+	
+	
+	<script src="../js/bootstrap.bundle.js"></script>
+</body>
+</html>
+
+<?php
+    session_start();
+    require '../dbcon.php';
+?>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Insertar pedido TEC Eats</title>
+
+	<link rel="stylesheet"  href="../css/bootstrap.css">
+
+	
+</head>
+<body class="container">
+	<div class="container mt-5 "  align="center">
+		<h1>Insertar pedido TEC Eats</h1>
+		<form action="InsertarPedido.php" method="POST">
+			<div class="form-group">
+			<div class="col-sm-10 mb-4 mt-5" >   
+				<input type="text" class="form-control" id="Alimento" placeholder="Alimento" name="Alimento">
+			</div>
+			</div>
+
+			<div class="container mb-4 d-block ">
+            <select class="form-select" aria-label="Default select example" id="Usuario" name="Usuario">
+                
+                <?php
+                    $query = "SELECT * FROM usuario";
+                    $query_run = mysqli_query($con, $query);
+
+                    if(mysqli_num_rows($query_run) > 0)
+                    {
+                        foreach($query_run as $Comida)
+                        {				
+                ?>	
+                            <option><?=$Comida['usuario']?></option>	
+                            <?php
+                        } 
+                    }
+                    ?>
+            </select>
+            </div>
+
+            <div class="form-group">
+			<div class="col-sm-10 mb-4" >   
+				<input type="text" class="form-control" id="Fecha" placeholder="Fecha" name="Fecha">
+			</div>
+			</div>
+
+			<div class="form-group">
+			<div class="col-sm-10 mb-4" >   
+				<input type="text" class="form-control" id="Precio" placeholder="Precio" name="Precio">
+			</div>
+			</div>
+
+			<button type="submit" class="btn btn-light mt-5" name="insertar_pedido" > <h2>Agregar</h2> </button>
+			<!-- href="../index.html" -->
+			
+		</form>
+
+	</div>
+	
+	
+	<script src="../js/bootstrap.bundle.js"></script>
+</body>
+</html>
+
+<?php
+    session_start();
+    require '../dbcon.php';
+?>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Modificar pedido TEC Eats</title>
+
+	<link rel="stylesheet"  href="../css/bootstrap.css">
+
+	
+</head>
+<body class="container">
+	<div class="container mt-5 "  align="center">
+		<h1>Modificar pedido TEC Eats</h1>
+		<form action="ModificarPedido.php" method="POST">
+
+            <div class="container mb-4 d-block ">
+            <select class="form-select" aria-label="Default select example" id="Alimento" name="Alimento">
+                
+                <?php
+                    $query = "SELECT * FROM pedidos";
+                    $query_run = mysqli_query($con, $query);
+
+                    if(mysqli_num_rows($query_run) > 0)
+                    {
+                        foreach($query_run as $Comida)
+                        {				
+                ?>	
+                            <option><?=$Comida['alimento']?></option>	
+                            <?php
+                        } 
+                    }
+                    ?>
+            </select>
+            </div>
+
+			<div class="form-group">
+			<div class="col-sm-10 mb-4 mt-5" >   
+				<input type="text" class="form-control" id="AlimentoNuevo" placeholder="Alimento Nuevo" name="AlimentoNuevo">
+			</div>
+			</div>
+
+			<div class="container mb-4 d-block ">
+            <select class="form-select" aria-label="Default select example" id="Usuario" name="Usuario">
+                
+                <?php
+                    $query = "SELECT * FROM usuario";
+                    $query_run = mysqli_query($con, $query);
+
+                    if(mysqli_num_rows($query_run) > 0)
+                    {
+                        foreach($query_run as $Comida)
+                        {				
+                ?>	
+                            <option><?=$Comida['usuario']?></option>	
+                            <?php
+                        } 
+                    }
+                    ?>
+            </select>
+            </div>
+
+            <div class="form-group">
+			<div class="col-sm-10 mb-4" >   
+				<input type="text" class="form-control" id="Fecha" placeholder="Fecha" name="Fecha">
+			</div>
+			</div>
+
+			<div class="form-group">
+			<div class="col-sm-10 mb-4" >   
+				<input type="text" class="form-control" id="Precio" placeholder="Precio" name="Precio">
+			</div>
+			</div>
+
+			<button type="submit" class="btn btn-light mt-5" name="modificar_pedido" > <h2>Modificar</h2> </button>
+			<!-- href="../index.html" -->
+			
+		</form>
+
+	</div>
+	
+	
+	<script src="../js/bootstrap.bundle.js"></script>
+</body>
+</html>
+
+<script src="../js/ValidadoCarrito.js">
+</script>
+<?php
+session_start();
+require '../dbcon.php';
+
+
+if(isset($_POST['registrar_carrito']))
+{
+    
+    
+    $comida = mysqli_real_escape_string($con, $_POST['col_title2']);
+	$precio = mysqli_real_escape_string($con, $_POST['col_title']);
+	$fecha = date("Y/m/d");
+	$id = $_GET['id'];
+    
+    $query = "INSERT INTO pedidos (alimento,usuario_id,fecha,precio)
+	VALUES ('$comida','$id','$fecha','$precio')";
+
+
+    $query_run = mysqli_query($con, $query);
+    if($query_run)
+    {   
+        echo "<script>ValidadoCarrito(true,$id)</script>";
+       
+    }
+    else
+    {
+        echo "<script>ValidadoCarrito(false,$id)</script>";
+    }
+}
+?>
+
+<script src="../js/GestionCliente.js"></script>
+<?php
+session_start();
+require '../dbcon.php';
+
+
+if(isset($_POST['insertar_cliente']))
+{
+    
+    $Registrado=false;
+    $nombre = mysqli_real_escape_string($con, $_POST['Nombre']);
+    $apellido1 = mysqli_real_escape_string($con, $_POST['Apellido1']);
+    $apellido2 = mysqli_real_escape_string($con, $_POST['Apellido2']);
+    $usuario = mysqli_real_escape_string($con, $_POST['Usuario']);
+    $contra= mysqli_real_escape_string($con, $_POST['Contra']);
+    $correo = mysqli_real_escape_string($con, $_POST['Correo']);
+    $tipo = mysqli_real_escape_string($con, $_POST['Tipo']);
+
+
+    $query = "INSERT INTO usuario (nombre,apellido1,apellido2,correo,usuario,passw,tipoUsuario)
+	VALUES ('$nombre','$apellido1','$apellido2','$correo','$usuario','$contra', '$tipo')";
+
+    $query_run = mysqli_query($con, $query);
+    if($query_run)
+    {   
+        echo "<script>GestionCliente(true)</script>";
+       
+    }
+    else
+    {
+        echo "<script>GestionCliente(false)</script>";
+    }
+}
+?>
+
+<script src="../js/GestionComida.js"></script>
+<?php
+session_start();
+require '../dbcon.php';
+
+
+if(isset($_POST['insertar_comida']))
+{
+    
+    $Gestion=false;
+    $nombre = mysqli_real_escape_string($con, $_POST['Nombre']);
+    $disponibilidad = mysqli_real_escape_string($con, $_POST['Disponibilidad']);
+    $tipo = mysqli_real_escape_string($con, $_POST['Tipo']);
+    $precio = mysqli_real_escape_string($con, $_POST['Precio']);
+    $tiempo= mysqli_real_escape_string($con, $_POST['Tiempo']);
+
+
+    $query = "INSERT INTO comidas (nombre,disponibilidad,tipo_id,precio,tiempo_id) 
+                SELECT '$nombre','$disponibilidad',tipos.id,'$precio',tiempos.id 
+                FROM tipos,tiempos 
+                WHERE tipos.nombre='$tipo' AND tiempos.nombre='$tiempo'";
+
+    $query_run = mysqli_query($con, $query);
+    if($query_run)
+    {   
+        echo "<script>GestionComida(true)</script>";
+       
+    }
+    else
+    {
+        echo "<script>GestionComida(false)</script>";
+    }
+}
+?>
+
+<script src="../js/GestionPedido.js"></script>
+<?php
+session_start();
+require '../dbcon.php';
+
+
+if(isset($_POST['insertar_pedido']))
+{
+    
+    $Gestion=false;
+    $alimento = mysqli_real_escape_string($con, $_POST['Alimento']);
+    $usuario = mysqli_real_escape_string($con, $_POST['Usuario']);
+    $fecha = mysqli_real_escape_string($con, $_POST['Fecha']);
+    $precio = mysqli_real_escape_string($con, $_POST['Precio']);
+
+
+    $query = "INSERT INTO pedidos (alimento, usuario, fecha, precio) VALUES ('$alimento', usuario.id, '$fecha', '$precio')
+                FROM usuario WHERE usuario.usuario = '$usuario'";
+
+    $query_run = mysqli_query($con, $query);
+    if($query_run)
+    {   
+        echo "<script>GestionPedido(true)</script>";
+       
+    }
+    else
+    {
+        echo "<script>GestionPedido(false)</script>";
+    }
+}
+?>
+
+
+<?php
+   error_reporting(0);
+   require '../dbcon.php';
+
+?>
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Desayuno TEC Eats</title>
+	<script src="https://code.jquery.com/jquery-3.1.0.min.js" type='text/javascript'></script>
+
+	<link rel="stylesheet"  href="../css/bootstrap.css">
+
+</head>
+<body class="container">
+
+
+<form action="Menu.php ?id=<?= $_GET['id']; ?>" method="POST">
+
+	<div class="container mt-5 "  align="center" >
+		<h2  class="mb-3" >Gracias!</h2>
+		<br>
+		<h5  class="mb-3" align="center" >Se ha facturado su compra</h5>
+		
+   <br>
+		<input type="submit" class="btn btn-light mt-5" name="aceptar" value="Volver Al menú">
+   <p id="text" style="display:none">Checkbox is CHECKED!</p>
+   
+	</div>	
+	<br>
+
+	
+	
+	<script src="../js/bootstrap.bundle.js"></script>         
+</form>
+</body>
+</html>
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Menu TEC Eats</title>
+
+	<link rel="stylesheet"  href="../css/bootstrap.css">
+
+</head>
+<body class="container">
+	<div class="container mt-5 "  align="center" >
+		<h2  class="mb-3">Menu TEC Eats</h2>
+
+		<div class="container mb-4 d-block ">
+			<a type="button" class="btn  btn-light"  href="Desayuno.php ?id=<?= $_GET['id']; ?>">Desayuno</a>
+		</div>
+		
+		<div class="container mb-4 d-block ">
+			<a type="button" class="btn btn-light"  href="Almuerzo.php ?id=<?= $_GET['id']; ?>">Almuerzo</a>
+		</div>
+		
+		<div class="container mb-4 d-block ">
+			<a type="button" class="btn btn-light"  href="Cafe.php ?id=<?= $_GET['id']; ?>">Cafe</a>
+		</div>
+
+		<div class="container mb-4 d-block ">
+			<a type="button" class="btn btn-light"  href="Cena.php ?id=<?= $_GET['id']; ?>">Cena</a>
+		</div>
+
+		<div class="container mb-4 d-block ">
+			<a type="button" class="btn btn-light"  href="VerCarrito.php ?id=<?= $_GET['id']; ?>">Ver carrito de compras</a>
+		</div>
+
+		<div class="container mb-4 d-block ">
+			<a type="button" class="btn btn-light"  href="../index.php">Salir</a>
+		</div>
+
+	</div>
+	<script src="../js/bootstrap.bundle.js"></script>
+</body>
+</html>
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Menu Administrador TEC Eats</title>
+
+	<link rel="stylesheet"  href="../css/bootstrap.css">
+
+</head>
+<body class="container">
+	<div class="container mt-5 "  align="center" >
+		<h2  class="mb-3">Menu Administrador TEC Eats</h2>
+
+		<div class="container mb-4 d-block ">
+			<a type="button" class="btn  btn-light"  href="MenuGestionComidas.php">Gestión de comidas</a>
+		</div>
+		
+		<div class="container mb-4 d-block ">
+			<a type="button" class="btn btn-light"  href="MenuGestionClientes.php">Gestión de clientes</a>
+		</div>
+
+		<div class="container mb-4 d-block ">
+			<a type="button" class="btn btn-light"  href="MenuGestionPedidos.php">Gestión de pedidos</a>
+		</div>
+
+		<div class="container mb-4 d-block ">
+			<a type="button" class="btn btn-light"  href="../index.php">Salir</a>
+		</div>
+
+	</div>
+	<script src="../js/bootstrap.bundle.js"></script>
+</body>
+</html>
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Menu de Gestion de clientes TEC Eats</title>
+
+	<link rel="stylesheet"  href="../css/bootstrap.css">
+
+</head>
+<body class="container">
+	<div class="container mt-5 "  align="center" >
+		<h2  class="mb-3">Menu de Gestion de clientes TEC Eats</h2>
+
+		<div class="container mb-4 d-block ">
+			<a type="button" class="btn  btn-light"  href="GestionClienteIns.php">Agregar cliente</a>
+		</div>
+		
+		<div class="container mb-4 d-block ">
+			<a type="button" class="btn btn-light"  href="GestionClienteUpd.php">Modificar cliente</a>
+		</div>
+
+		<div class="container mb-4 d-block ">
+			<a type="button" class="btn btn-light"  href="GestionClienteDel.php">Eliminar cliente</a>
+		</div>
+
+		<div class="container mb-4 d-block ">
+			<a type="button" class="btn btn-light"  href="../index.php">Salir</a>
+		</div>
+
+	</div>
+	<script src="../js/bootstrap.bundle.js"></script>
+</body>
+</html>
+
+<script src="../js/GestionCliente.js"></script>
+<?php
+session_start();
+require '../dbcon.php';
+
+
+if(isset($_POST['modificar_usuario']))
+{
+    
+    $Registrado=false;
+    $nombre = mysqli_real_escape_string($con, $_POST['Nombre']);
+    $nombreNuevo = mysqli_real_escape_string($con, $_POST['NombreNuevo']);
+    $apellido1 = mysqli_real_escape_string($con, $_POST['Apellido1']);
+    $apellido2 = mysqli_real_escape_string($con, $_POST['Apellido2']);
+    $usuario = mysqli_real_escape_string($con, $_POST['Usuario']);
+    $contra= mysqli_real_escape_string($con, $_POST['Contra']);
+    $correo = mysqli_real_escape_string($con, $_POST['Correo']);
+    $tipo = mysqli_real_escape_string($con, $_POST['Tipo']);
+
+
+    $query = "UPDATE usuario 
+            SET nombre='$nombreNuevo', apellido1='$apellido1', apellido2='$apellido2', correo='$correo', usuario='$usuario', passw='$contra', tipoUsuario='$tipo' 
+            WHERE nombre='$nombre'";
+
+    $query_run = mysqli_query($con, $query);
+    if($query_run)
+    {   
+        echo "<script>GestionCliente(true)</script>";
+       
+    }
+    else
+    {
+        echo "<script>GestionCliente(false)</script>";
+    }
+}
+?>
+
+<?php
+    session_start();
+    require '../dbcon.php';
+?>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Registro TEC Eats</title>
+
+	<link rel="stylesheet"  href="../css/bootstrap.css">
+
+	
+</head>
+<body class="container">
+	<div class="container mt-5 "  align="center">
+		<h1>TEC Eats</h1>
+		<form action="InsertarUsuario.php" method="POST">
+			<div class="form-group">
+			<div class="col-sm-10 mb-4 mt-5" >   
+				<input type="text" class="form-control" id="Nombre" placeholder="Nombre" name="Nombre">
+			</div>
+			</div>
+
+			<div class="form-group">
+			<div class="col-sm-10 mb-4" >   
+				<input type="text" class="form-control" id="Apellido1" placeholder="Apellido 1" name="Apellido1">
+			</div>
+			</div>
+
+			<div class="form-group">
+			<div class="col-sm-10 mb-4" >   
+				<input type="text" class="form-control" id="Apellido2" placeholder="Apellido 2" name="Apellido2">
+			</div>
+			</div>
+
+			<div class="form-group">
+			<div class="col-sm-10 mb-4" >   
+				<input type="text" class="form-control" id="Usuario" placeholder="Nombre de usuario" name="Usuario">
+			</div>
+			</div>
+
+			<div class="form-group">
+			<div class="col-sm-10 mb-4">          
+				<input type="password" class="form-control" id="Contrase" placeholder="Contraseña"  
+				pattern="(?=.*\d)(?=.*[!,¡,#,¿,?,@])(?=.*[a-z])(?=.*[A-Z]).{8,}" title="La contraseña debe tener mas de 8 caracteres y minimo 1 digito ,1 minuscula,1 mayuscula y un 1 caracter especial(!¡#¿?@)" required name="Contra">
+			</div>
+			</div>
+
+			<div class="form-group">
+			<div class="col-sm-10 mb-4" >   
+				<input type="email" class="form-control" id="Correo" placeholder="Correo" name="Correo">
+			</div>
+			</div>
+
+			<button type="submit" class="btn btn-light mt-5" name="insertar_usuario" > <h2>Registrarse</h2> </button>
+			<!-- href="../index.html" -->
+			
+		</form>
+
+	</div>
+	
+	
+	<script src="../js/bootstrap.bundle.js"></script>
+</body>
+</html>
+
+
+<?php
+   error_reporting(0);
+   require '../dbcon.php';
+
+?>
+
+<?php
+	if(isset($_POST['save']))
+	{	
+		//si se toca el botón de agregar comida, se ejecuta este código que aún no está terminado
+		$query = "SELECT * FROM comidas WHERE tipo_id= 1 and tiempo_id = 1";
+		$query_run = mysqli_query($con, $query);
+						
+	}
+
+?>
+
+
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Desayuno TEC Eats</title>
+	<script src="https://code.jquery.com/jquery-3.1.0.min.js" type='text/javascript'></script>
+
+	<link rel="stylesheet"  href="../css/bootstrap.css">
+
+</head>
+<body class="container">
+
+
+<form action="MensajeCarrito.php ?id=<?= $_GET['id']; ?>" method="POST">
+
+	<div class="container mt-5 "  align="center" >
+		<h2  class="mb-3" >Carrito de compras</h2>
+		<br>
+		<h5  class="mb-3" align="center" >Detalles</h5>
+		<table border='1' cellpadding='0' cellspacing='0' width='650' bgcolor='#F6F6F6' bordercolor='#5F5F5F' align='center' id='table'>
+      <tr>
+         <th width='150' style='font-weight: bold' style='text-align:center'>Pedidos</th> 
+         <th width='150' style='font-weight: bold' style='text-align:center'>Total</th>
+      </tr>   
+		<?php
+				$query = "select * from Pedidos ORDER BY id DESC LIMIT 1;";
+				$query_run = mysqli_query($con, $query);
+				$contador = 0;
+				$check = 'check';
+
+				if(mysqli_num_rows($query_run) > 0)
+				{
+					foreach($query_run as $Pedidos)
+					{	
+						$contador++; 					
+						echo "
+						<tr>
+							<td>".$Pedidos['alimento']."</td>	
+							<td>".$Pedidos['precio']."</td>					
+						</tr>
+						";
+						 
+					} 
+				}
+						?>
+   </table>
+   
+   
+   <script>
+            function sumarTabla()
+            {
+				$('#registrar_carrito').toggle();
+				var table = document.getElementById("table"), sumVal = 0;  
+				var table2 = document.getElementById("table2");
+				var table3 = document.getElementById("table3");
+				var table4 = document.getElementById("table4");	
+				
+				for(var i = 1; i < table.rows.length; i++)
+				{
+					if(document.getElementById(i.toString()).checked)
+					{
+						sumVal = sumVal + parseInt(table.rows[i].cells[2].innerHTML);
+					}                  
+				}
+				for(var i = 1; i < table2.rows.length; i++)
+				{
+					if(document.getElementById("B"+i.toString()).checked)
+					{
+						sumVal = sumVal + parseInt(table2.rows[i].cells[2].innerHTML);
+					}                  
+				}
+				for(var i = 1; i < table3.rows.length; i++)
+				{
+					if(document.getElementById("C"+i.toString()).checked)
+					{
+						sumVal = sumVal + parseInt(table3.rows[i].cells[2].innerHTML);
+					}                  
+				}
+				for(var i = 1; i < table4.rows.length; i++)
+				{
+					if(document.getElementById("D"+i.toString()).checked)
+					{
+						sumVal = sumVal + parseInt(table4.rows[i].cells[2].innerHTML);
+					}                  
+				}
+				document.getElementById("val").innerHTML = sumVal;
+               
+            }
+   </script>
+   
+
+   <br>
+		<input type="submit" class="btn btn-light mt-5" name="Facturar" value="Facturar">
+   <p id="text" style="display:none">Checkbox is CHECKED!</p>
+   
+	</div>	
+	<br>
+
+	<script>
+		$('#replybutton').click(function() {
+		$('#registrar_carrito').toggle()
+		})
+	</script>
+	
+	
+	<script src="../js/bootstrap.bundle.js"></script>         
+</form>
+</body>
+</html>

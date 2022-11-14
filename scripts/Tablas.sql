@@ -7,7 +7,7 @@ create table usuario (
     nombre varchar(15),
     apellido1 varchar(15),
     apellido2 varchar(15),
-    correo varchar(25),
+    correo varchar(35),
     usuario varchar(15),
     passw varchar(15),
     tipoUsuario bool

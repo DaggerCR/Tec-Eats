@@ -50,7 +50,7 @@
 
 			<div class="form-group">
 			<div class="col-sm-10 mb-4" >   
-				<input type="email" class="form-control" id="Correo" placeholder="Correo" name="Correo">
+				<input type="email" class="form-control" id="Correo" placeholder="Correo" pattern="^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@estudiantec.cr$" name="Correo">
 			</div>
 			</div>
 
